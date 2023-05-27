@@ -1,0 +1,32 @@
+{
+  "name": "dw_new",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dayjs": "^1.4.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "core-js": "^3.25.3",
+    "dayjs": "^1.11.7",
+    "moment": "^2.29.4",
+    "nuxt": "^2.15.8",
+    "sass": "^1.61.0",
+    "sass-loader": "^10.0.0",
+    "swiper": "^6.8.4",
+    "v-click-outside": "^3.2.0",
+    "vue": "^2.7.10",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10"
+  },
+  "devDependencies": {
+    "webpack": "^4.46.0"
+  }
+}
