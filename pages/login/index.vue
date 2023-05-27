@@ -16,7 +16,6 @@ export default {
     },
     redirect() {
       this.$router.push("/news");
-      console.log(this.$route);
     },
     async handleSubmit() {
       this.loading = true;
@@ -35,7 +34,12 @@ export default {
               userRole: res.data.roles[0].name === "ROLE_USER" ? 2 : 1,
             })
           );
-
+          this.$store.commit("SET_LOGGEDIN", true);
+          this.$store.commit("SET_USER",
+            {
+              ...res.data,
+              userRole: res.data.roles[0].name === "ROLE_USER" ? 2 : 1,
+            });
           this.redirect();
         })
         .catch((err) => console.error(err))
