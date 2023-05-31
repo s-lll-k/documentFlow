@@ -29,16 +29,16 @@ export default {
       user: {},
       edit: false,
       profileInfo: [
-        { title: "IIТ студента", backendKey: "id" },
-        { title: "ID студента", backendKey: "stud_iin" },
+        { title: "IIТ студента", backendKey: "studIIN" },
+        { title: "ID студента", backendKey: "userId" },
         { title: "Имя", backendKey: "firstname" },
         { title: "Фамилия", backendKey: "lastname" },
-        { title: "Факультет", backendKey: "" },
-        { title: "Форма обучения", backendKey: "" },
-        { title: "Грант", backendKey: "" },
-        { title: "Курс", backendKey: "" },
-        { title: "Год поступления", backendKey: "admissionYear" },
-        { title: "Год окончания", backendKey: "graduationYear" },
+        { title: "Факультет", backendKey: "faculty" },
+        { title: "Форма обучения", backendKey: "educationType" },
+        { title: "Грант", backendKey: "studGrant" },
+        { title: "Курс", backendKey: "cource" },
+        { title: "Год поступления", backendKey: "yearAdm" },
+        { title: "Год окончания", backendKey: "yearGrad" },
       ],
     };
   },
@@ -52,7 +52,10 @@ export default {
           username: this.$store.getters.GET_USER.username,
         },
       })
-      .then((res) => (this.user = res.data))
+      .then((res) => {
+        console.log('RES', res.data);
+        (this.user = res.data)
+      })
       .catch((err) => console.error(err));
   },
   methods: {

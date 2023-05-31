@@ -22,7 +22,9 @@ export default {
 
     this.$store.getters.GET_USER.roles.forEach((item) => {
       if (item === "ROLE_USER") {
-        apiEndpoint = "/api/doc/" + this.$store.getters.GET_USER.id;
+        apiEndpoint = "/api/doc/";
+      } else if (item === "ROLE_MODERATOR") {
+        apiEndpoint = "/api/doc/all?status=CLOSED";
       }
     });
 
@@ -34,7 +36,6 @@ export default {
       })
       .then((res) => {
         this.archieve = res.data;
-        console.log(res.data);
       })
       .catch((err) => console.error(err));
   },
@@ -71,6 +72,9 @@ export default {
       this.show = false;
       this.showType = false;
     },
+    openReference(id) {
+      this.$router.push({path: "/reference", query: {referenceId: id}})
+    }
   },
 };
 </script>
@@ -84,17 +88,18 @@ export default {
       <div class="applications__items">
         <div
           v-for="(item, index) in archieve"
-          :key="item.id + index"
+          :key="item?.id + index"
           class="applications__item"
+          @click="openReference(item?.id)"
         >
           <p>
-            {{ moment(item.date).locale("ru").format("L") }}
+            {{ moment(item?.date).locale("ru").format("L") }}
           </p>
           <div>
-            <span> #{{ item.id }} </span>
-            <h6>{{ item.category }}</h6>
+            <span> #{{ item?.id }} </span>
+            <h6>{{ item?.category }}</h6>
           </div>
-          <span>{{ item.status }}</span>
+          <span>{{ item?.status }}</span>
         </div>
       </div>
     </div>

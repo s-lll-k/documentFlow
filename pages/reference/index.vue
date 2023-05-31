@@ -2,8 +2,6 @@
 export default {
   data() {
     return {
-      createApplication: false,
-      showPopup: false,
       loading: false,
       profileInfo: [
         { title: "IIТ студента", backendKey: "studIIN" },
@@ -17,13 +15,7 @@ export default {
         { title: "Год поступления", backendKey: "yearAdm" },
         { title: "Год окончания", backendKey: "yearGrad" },
       ],
-      applications: [],
-      applicationTypes: [
-        { title: "Транскрипт" },
-        { title: "Справка с места учебы" },
-        { title: "Справка о наличии гранта" },
-        { title: "Лист перезачета кредитов" },
-      ],
+      referenceInfo: null,
       show: false,
       user: {},
       showType: false,
@@ -36,7 +28,7 @@ export default {
     this.getApplicationTypes();
     const config = {
       params: {
-        status: 'NEW',
+        username: this.$store.getters.GET_USER.username,
       },
       headers: {
         Authorization: `Bearer ${this.$store.getters.GET_USER.token}`,
@@ -46,12 +38,10 @@ export default {
       .get(`/api/users/me`, config)
       .then((res) => (this.user = res.data))
       .catch((err) => console.error(err));
+    
     await this.$axios
-      .get(`/api/doc/all`, config)
-      .then((res) => {
-        console.log('res.data', res.data)
-        (this.applications = [...res.data]);
-      })
+      .get(`/api/doc/${this.$route.query.referenceId}`, config)
+      .then((res) => (this.referenceInfo = res.data))
       .catch((err) => console.error(err));
   },
   methods: {
@@ -61,6 +51,7 @@ export default {
           Authorization: `Bearer ${this.$store.getters.GET_USER.token}`,
         },
       });
+      console.log('types', types)
       this.applicationTypes = types.data.map((item) => {
         return {
           title: item.name,
@@ -74,12 +65,12 @@ export default {
     filterApplications(sort) {
       this.applications.sort((a, b) => {
         return sort === "new"
-          ? new Date(b.createdAt) - new Date(a.createdAt)
-          : new Date(a.createdAt) - new Date(b.createdAt);
+          ? new Date(b.date) - new Date(a.date)
+          : new Date(a.date) - new Date(b.date);
       });
     },
     searchApplications(val) {
-      // TODO: серч по айди заявки
+      console.log(val);
     },
     selectApplicationType(v, i) {
       this.categoryCode = v.code;
@@ -96,9 +87,6 @@ export default {
       this.selectedApplicationType
         ? (this.createApplication = true)
         : alert("Выберите тип заявки");
-    },
-    openReference(id) {
-      this.$router.push({path: "/reference", query: {referenceId: id}})
     },
     async openPopup() {
       await this.$axios
@@ -128,6 +116,26 @@ export default {
       this.createApplication = false;
       this.selectedApplicationType = null;
     },
+    async editRef(statusCode) {
+      if (this.referenceInfo.id && statusCode) {
+        await this.$axios
+          .patch("/api/doc/status", {
+            headers: {
+              Authorization: `Bearer ${this.$store.getters.GET_USER.token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              id: this.referenceInfo.id,
+              statusCode: statusCode
+            })
+          })
+          .then(() => {
+            this.$router.push({ path: "/applications" })
+          })
+      } else {
+        console.error('Не удалось прочитать статус или ID заявки')
+      }
+    }
   },
 };
 </script>
@@ -138,110 +146,48 @@ export default {
       v-if="$store.getters.GET_USER.userRole === 1"
       class="applications__block"
     >
-      <div class="applications__filter">
-        <h2 class="applications__title">Новые заявки</h2>
-        <div class="search">
-          <div class="filter">
-            <p
-              class="filter__title"
-              @click="switchItemsVisibility"
-              v-click-outside="externalClick"
-            >
-              Фильтровать
-              <svg
-                :class="{ reveal: show, closed: !show }"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L7 7L13 1"
-                  stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+        <div class="manager-tool">
+          <button class="manager-tool__btn" @click="editRef('')">
+            Отправить на доработку
+          </button>
+          <button class="manager-tool__btn" @click="editRef('CANCELED')">
+            Отклонить
+          </button>
+          <button class="manager-tool__btn" @click="editRef('IN_PROGRESS')">
+            Принять в работу
+          </button>
+          <button class="manager-tool__btn" @click="editRef('CLOSED')">
+            Закрыть заявку
+          </button>
+        </div>
+        <h1>#{{referenceInfo?.id}}</h1>
+        <h2>{{ referenceInfo?.category }}</h2>
+        <div class="profile__items" v-if="referenceInfo">
+          <div
+            class="profile__item"
+            v-for="(item, index) in profileInfo"
+            :key="index"
+          >
+            <p>
+              {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
             </p>
-            <div v-show="show" class="filter__items">
-              <div class="filter__item" @click="filterApplications('new')">
-                По новым
-              </div>
-              <div class="line"></div>
-              <div class="filter__item" @click="filterApplications('old')">
-                По старым
-              </div>
-            </div>
           </div>
-          <SearchComponent @searchItems="searchApplications" width="195px" />
         </div>
-      </div>
-      <div class="applications__items">
-        <div
-          v-for="(item, index) in applications"
-          :key="item.id + index"
-          class="applications__item"
-          @click="openReference(item.id)"
-        >
-          <p>
-            {{ item.createdAt }}
-          </p>
-          <div>
-            <span>
-              {{ item.id }}
+        <div class="profile__commentaries">
+          <h3>Комментарии</h3>
+          <div class="profile__comment">
+            <span v-if="!referenceInfo?.description.trim()">
+              Комментарии отсутствуют
             </span>
-            <h6>{{ item.category }}</h6>
+            <span v-else >
+              {{ referenceInfo.description }}
+            </span>
           </div>
-          <span>{{ item.status }}</span>
         </div>
-      </div>
     </div>
     <div v-else class="applications__student">
-      <div v-if="!createApplication" class="applications__step1">
-        <h2 class="applications__title">Создать заявку</h2>
-        <div class="selector">
-          <div
-            class="selector__selected"
-            @click="openApplicationTypes"
-            v-click-outside="externalClick"
-          >
-            {{ selectedApplicationType ?? "Тип заявки" }}
-            <svg
-              :class="{ reveal: showType, closed: !showType }"
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 1L7 7L13 1"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <div v-show="showType" class="selector__items">
-            <div
-              class="selector__item"
-              v-for="(option, index) in applicationTypes"
-              :key="option.title + index"
-              @click="selectApplicationType(option, index)"
-            >
-              {{ option.title }}
-            </div>
-          </div>
-        </div>
-        <button @click="requestApplication" class="applications__button">
-          Подать заявку
-        </button>
-      </div>
-      <div v-if="createApplication" class="profile">
-        <h2>{{ selectedApplicationType }}</h2>
+      <div class="profile" v-if="referenceInfo">
+        <h2>{{ referenceInfo.category }} #{{referenceInfo.id}}</h2>
         <div class="profile__items">
           <div
             class="profile__item"
@@ -249,32 +195,50 @@ export default {
             :key="index"
           >
             <p>
-              {{ item.title }}:<span>{{ user[item.backendKey] }}</span>
+              {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
             </p>
           </div>
         </div>
         <div class="profile__commentaries">
           <h3>Комментарии</h3>
-          <textarea
-            v-model="description"
-            style="width: 100%; border-radius: 6px"
-          />
+          <div class="profile__comment">
+            <span v-if="!referenceInfo.description.trim()">
+              Комментарии отсутствуют
+            </span>
+            <span v-else >
+              {{ referenceInfo.description }}
+            </span>
+          </div>
         </div>
-        <button @click="openPopup" class="profile__button">
-          Подать заявку
-        </button>
-      </div>
-    </div>
-    <div v-if="showPopup" class="popup">
-      <div class="popup__content">
-        <h4>Заявка успешно отправлена</h4>
-        <button @click="closePopup">ОК</button>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+h1 {
+  margin-bottom: 22px;
+}
+.manager-tool {
+  display: flex;
+  margin-left: auto;
+  margin-bottom: 50px;
+  gap: 20px;
+  &__btn {
+    cursor: pointer;
+    padding: 8px 13px;
+    border: 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    color: #000000;
+  }
+}
 .applications {
   display: flex;
   padding-bottom: 50px;

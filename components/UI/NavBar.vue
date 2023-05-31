@@ -75,11 +75,11 @@ export default {
           icon: require("@/assets/images/profile.png"),
           url: "/profile",
         },
-        // {
-        //   title: "Календарь",
-        //   icon: require("@/assets/images/calendar.png"),
-        //   url: "/calendar",
-        // },
+        {
+          title: "Календарь",
+          icon: require("@/assets/images/calendar.png"),
+          url: "/calendar",
+        }
       ],
     };
   },

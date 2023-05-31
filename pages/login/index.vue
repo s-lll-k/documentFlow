@@ -5,7 +5,7 @@ export default {
     return {
       user: {},
       activeStep: 1,
-      username: "admin",
+      username: "27488", // admin
       password: "12345678",
       loading: false,
     };
@@ -31,14 +31,14 @@ export default {
             "user",
             JSON.stringify({
               ...res.data,
-              userRole: res.data.roles[0].name === "ROLE_USER" ? 2 : 1,
+              userRole: res.data.roles[0] === "ROLE_USER" ? 2 : 1,
             })
           );
           this.$store.commit("SET_LOGGEDIN", true);
           this.$store.commit("SET_USER",
             {
               ...res.data,
-              userRole: res.data.roles[0].name === "ROLE_USER" ? 2 : 1,
+              userRole: res.data.roles[0] === "ROLE_USER" ? 2 : 1,
             });
           this.redirect();
         })
