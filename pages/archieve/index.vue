@@ -142,6 +142,7 @@ export default {
     width: 100%;
   }
   &__item {
+    cursor: pointer;
     max-width: 784px;
     width: 100%;
     background: white;
