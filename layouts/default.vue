@@ -18,10 +18,6 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  background: #ecebf3;
-  min-height: 100vh;
-  width: 100%;
-
   &__container {
     padding-top: 60px;
     margin: 0 auto;
