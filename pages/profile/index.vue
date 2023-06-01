@@ -1,10 +1,10 @@
 <template>
   <div class="profile">
-    <h1 class="profile__title">Информация о студенте</h1>
+    <h1 class="profile__title">Информация о {{$store.getters.GET_USER.userRole === 1 ? "менеджере" : "студенте"}}</h1>
     <div class="profile__items">
       <div
         class="profile__item"
-        v-for="(item, index) in profileInfo"
+        v-for="(item, index) in $store.getters.GET_USER.userRole === 1 ? managerProfileInfo : profileInfo"
         :key="index"
       >
         <p v-if="!edit">
@@ -40,6 +40,12 @@ export default {
         { title: "Год поступления", backendKey: "yearAdm" },
         { title: "Год окончания", backendKey: "yearGrad" },
       ],
+      managerProfileInfo: [
+        { title: "Имя", backendKey: "firstname" },
+        { title: "Фамилия", backendKey: "lastname" },
+        { title: "Номер телефона", backendKey: "phoneNumber" },
+        { title: "E-mail", backendKey: "email" },
+      ]
     };
   },
   async created() {

@@ -42,36 +42,34 @@ export default {
 
 <template>
   <div>
-    <div v-if="$store.getters.GET_USER.userRole === 1">
-      <div class="navigation">
-        <div class="swiper-button-prev prev-btn"></div>
-        <swiper ref="swiper" :options="swiperOptions" class="swiper">
-          <swiper-slide v-for="item in 4" :key="item" class="swiper-slide">
-            <div class="swiper-item">
-              <img src="@/assets/images/universities.png" />
-              <p>Справка с места учебы</p>
-            </div>
-          </swiper-slide>
-        </swiper>
-        <div class="swiper-button-next next-btn"></div>
-      </div>
-      <div class="news">
-        <h1 class="news__title">Новости</h1>
-        <div class="news__items">
-          <div class="news__item" v-for="(item, index) in news" :key="index">
-            <span>{{ moment(item.createdAt).locale("ru").format("L") }}</span>
-            <p>{{ item.text }}</p>
+    <div class="navigation">
+      <div class="swiper-button-prev prev-btn"></div>
+      <swiper ref="swiper" :options="swiperOptions" class="swiper">
+        <swiper-slide v-for="item in 4" :key="item" class="swiper-slide">
+          <div class="swiper-item">
+            <img src="@/assets/images/universities.png" />
+            <p>Справка с места учебы</p>
           </div>
+        </swiper-slide>
+      </swiper>
+      <div class="swiper-button-next next-btn"></div>
+    </div>
+    <div class="news">
+      <h1 class="news__title">Новости</h1>
+      <div class="news__items">
+        <div class="news__item" v-for="(item, index) in news" :key="index">
+          <span>{{ moment(item.createdAt).locale("ru").format("L") }}</span>
+          <p>{{ item.text }}</p>
         </div>
       </div>
     </div>
-    <div v-else></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.swiper {
-  margin-bottom: 60px;
+.swiper-slide {
+  display: flex;
+  justify-content: center;
 }
 .swiper-item {
   max-width: 325px;
@@ -143,7 +141,7 @@ export default {
 .navigation {
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 56px;
 
   // position: relative;
 
@@ -159,7 +157,10 @@ export default {
     height: 41px;
   }
   .swiper-button-prev {
-    margin-right: 60px;
+    margin-right: 30px;
+  }
+  .swiper-button-next {
+    margin-left: 30px;
   }
   .swiper-button-next:after,
   .swiper-container-rtl .swiper-button-prev:after,

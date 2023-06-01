@@ -6,12 +6,12 @@ export default {};
     <div class="content">
         <SearchComponent width="250px" />
         <div class="content__buttons">
-            <div>
+            <button class="content__btn" v-if="$store.getters.GET_USER.userRole === 2">
                 <img src="@/assets/images/applications/colocol.png" />
-            </div>
-            <div>
+            </button>
+            <button class="content__btn">
                 <img src="@/assets/images/applications/settings.png" />
-            </div>
+            </button>
         </div>
     </div>
 </template>
@@ -27,27 +27,27 @@ export default {};
     &__buttons {
         display: flex;
         align-items: center;
+    }
+    &__btn {
+        border-width: 0;
+        border-radius: 50%;
+        margin-right: 18px;
+        background: white;
+        width: 42px;
+        height: 42px;
 
-        div {
-            border-radius: 50%;
-            margin-right: 18px;
-            background: white;
-            width: 42px;
-            height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        img {
+            width: 23px;
+            height: 23px;
+            object-fit: cover;
+        }
 
-            img {
-                width: 23px;
-                height: 23px;
-                object-fit: cover;
-            }
-
-            &:last-of-type {
-                margin-right: 0;
-            }
+        &:last-of-type {
+            margin-right: 0;
         }
     }
 }
