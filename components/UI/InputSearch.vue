@@ -1,10 +1,24 @@
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            showStaticComponent: false
+        };
+    },
+    created() {
+        this.showStaticComponent = this.$router.currentRoute.name === 'news';
+    },
+    watch: {
+        $route(newRoute, oldRoute) {
+            this.showStaticComponent = (newRoute.name === 'news');
+        }
+    }
+};
 </script>
 
 <template>
     <div class="content">
-        <SearchComponent width="250px" />
+        <SearchComponent width="250px" v-if="showStaticComponent"/>
         <div class="content__buttons">
             <button class="content__btn" v-if="$store.getters.GET_USER.userRole === 2">
                 <img src="@/assets/images/applications/colocol.png" />
@@ -27,6 +41,7 @@ export default {};
     &__buttons {
         display: flex;
         align-items: center;
+        margin-left: auto;
     }
     &__btn {
         border-width: 0;

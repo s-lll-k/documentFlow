@@ -1,6 +1,19 @@
 <script>
 export default {
   middleware: ["auth"],
+  data() {
+    return {
+      showStaticComponent: true
+    };
+  },
+  created() {
+    this.showStaticComponent = this.$router.currentRoute.name !== 'reference';
+  },
+  watch: {
+    $route(newRoute, oldRoute) {
+        this.showStaticComponent = (newRoute.name !== 'reference');
+    }
+  }
 };
 </script>
 
@@ -9,7 +22,7 @@ export default {
     <main class="main">
       <div class="main__container">
         <NavBar />
-        <InputSearch />
+        <InputSearch v-if="showStaticComponent"/>
         <Nuxt />
       </div>
     </main>

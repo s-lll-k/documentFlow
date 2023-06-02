@@ -20,7 +20,7 @@
         class="navbar__item"
         :class="{ active: $route.path === item.url }"
       >
-        <nuxt-link :to="item.url">
+        <nuxt-link :to="item.url" v-if="item?.role === $store.getters.GET_USER.userRole ? true : item?.role === undefined ? true : false">
           <img :src="item.icon" />
           <span>{{ item.title }}</span>
         </nuxt-link>
@@ -59,6 +59,12 @@ export default {
           title: "Новости",
           icon: require("@/assets/images/updates.png"),
           url: "/news",
+        },
+        {
+          title: "Новые заявки",
+          icon: require("@/assets/images/applications.png"),
+          url: "/newApplications",
+          role: 1 // only for manager
         },
         {
           title: "Заявки",

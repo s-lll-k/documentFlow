@@ -24,7 +24,7 @@ export default {
       if (item === "ROLE_USER") {
         apiEndpoint = "/api/doc/";
       } else if (item === "ROLE_MODERATOR") {
-        apiEndpoint = "/api/doc/all?status=CLOSED";
+        apiEndpoint = "/api/doc/all?statuses=CLOSED&statuses=CANCELED&statuses=REJECTED";
       }
     });
 

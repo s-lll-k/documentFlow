@@ -35,23 +35,21 @@ export default {
   async created() {
     this.getApplicationTypes();
     const config = {
+      params: {
+        status: 'NEW',
+      },
       headers: {
         Authorization: `Bearer ${this.$store.getters.GET_USER.token}`,
       },
     };
-
-    if (this.$store.getters.GET_USER.userRole === 1) {
-      config.params = { managerLogin: this.$store.getters.GET_USER.username };
-    }
-
     await this.$axios
       .get(`/api/users/me`, config)
       .then((res) => (this.user = res.data))
       .catch((err) => console.error(err));
     await this.$axios
       .get(`/api/doc/all`, config)
-      .then((res) => (this.applications = [...res.data]))
-      .catch((err) => console.error(err));
+      .then((res) => this.applications = [...res.data])
+      .catch((err) => {console.error(err)});
   },
   methods: {
     async getApplicationTypes() {
@@ -195,79 +193,6 @@ export default {
           </div>
           <span>{{ item.status }}</span>
         </div>
-      </div>
-    </div>
-    <div v-else class="applications__student">
-      <div v-if="!createApplication" class="applications__step1">
-        <h2 class="applications__title">Создать заявку</h2>
-        <div class="selector">
-          <div
-            class="selector__selected"
-            @click="openApplicationTypes"
-            v-click-outside="externalClick"
-          >
-            {{ selectedApplicationType ?? "Тип заявки" }}
-            <svg
-              :class="{ reveal: showType, closed: !showType }"
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 1L7 7L13 1"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <div v-show="showType" class="selector__items">
-            <div
-              class="selector__item"
-              v-for="(option, index) in applicationTypes"
-              :key="option.title + index"
-              @click="selectApplicationType(option, index)"
-            >
-              {{ option.title }}
-            </div>
-          </div>
-        </div>
-        <button @click="requestApplication" class="applications__button">
-          Подать заявку
-        </button>
-      </div>
-      <div v-if="createApplication" class="profile">
-        <h2>{{ selectedApplicationType }}</h2>
-        <div class="profile__items">
-          <div
-            class="profile__item"
-            v-for="(item, index) in profileInfo"
-            :key="index"
-          >
-            <p>
-              {{ item.title }}:<span>{{ user[item.backendKey] }}</span>
-            </p>
-          </div>
-        </div>
-        <div class="profile__commentaries">
-          <h3>Комментарии</h3>
-          <textarea
-            v-model="description"
-            style="width: 100%; border-radius: 6px"
-          />
-        </div>
-        <button @click="openPopup" class="profile__button">
-          Подать заявку
-        </button>
-      </div>
-    </div>
-    <div v-if="showPopup" class="popup">
-      <div class="popup__content">
-        <h4>Заявка успешно отправлена</h4>
-        <button @click="closePopup">ОК</button>
       </div>
     </div>
   </div>
