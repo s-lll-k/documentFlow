@@ -87,7 +87,6 @@ export default {
           />
         </label>
         <button type="submit" class="form__button">Войти</button>
-        <a class="forgot-password">Забыли парль?</a>
       </form>
     </main>
   </client-only>
