@@ -12,7 +12,7 @@ export default {};
 
 <style lang="scss" scoped>
 .login {
-  background: #c2c2c2;
+  background: #ECEBF3;
   width: 100vw;
   min-height: 100vh;
 }

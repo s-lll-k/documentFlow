@@ -11,7 +11,7 @@ export default {
   },
   watch: {
     $route(newRoute, oldRoute) {
-        this.showStaticComponent = (newRoute.name !== 'reference');
+      this.showStaticComponent = (newRoute.name !== 'reference');
     }
   }
 };
@@ -22,7 +22,7 @@ export default {
     <main class="main">
       <div class="main__container">
         <NavBar />
-        <InputSearch v-if="showStaticComponent"/>
+        <InputSearch v-if="showStaticComponent" />
         <Nuxt />
       </div>
     </main>
@@ -34,23 +34,26 @@ export default {
   &__container {
     padding-top: 60px;
     margin: 0 auto;
-    padding-left: 400px;
-    padding-right: 55px;
+    // padding-left: 400px;
+    padding: 60px 20px 0;
     width: 100%;
   }
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 a {
   text-decoration: unset;
 }
+
 button {
   cursor: pointer;
 }
+
 input {
   outline: none;
-}
-</style>
+}</style>

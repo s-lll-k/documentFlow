@@ -2,7 +2,7 @@
 export default {
     data() {
         return {
-            languages: ["KZ", "RU", "EN"],
+            languages: ["RU", "KZ", "EN"],
             selectedLanguage: 0,
         };
     },
@@ -16,13 +16,8 @@ export default {
 
 <template>
     <div class="languages">
-        <div
-            v-for="(lang, index) in languages"
-            :key="index"
-            :class="{ active: selectedLanguage === index }"
-            @click="selectLanguage(index)"
-            class="languages__item"
-        >
+        <div v-for="(lang, index) in languages" :key="index" :class="{ active: selectedLanguage === index }"
+            @click="selectLanguage(index)" class="languages__item">
             {{ lang }}
         </div>
     </div>
@@ -36,22 +31,33 @@ export default {
     position: absolute;
     top: 78px;
     right: 78px;
+    gap: 0 10px;
+
+    @media screen and (max-width:1024px) {
+        top: 20px;
+        right: 20px;
+
+    }
 
     &__item {
         cursor: pointer;
         font-style: normal;
         font-weight: 400;
-        font-size: 24px;
-        line-height: 28px;
-        color: #6b6b6b;
-        margin-right: 10px;
+        font-size: 30px;
+        // line-height: 28px;
+        color: #0C0B0B;
 
-        &:last-of-type {
-            margin-right: 0;
+        @media screen and (max-width:1024px) {
+            font-size: 24px;
         }
     }
+
     .active {
-        color: red !important;
+        color: #6B6B6B;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: #000000;
+        // border: 1px solid #000000;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 }
 </style>

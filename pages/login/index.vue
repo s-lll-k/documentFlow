@@ -62,29 +62,15 @@ export default {
       <h1 class="login__title" :class="{ title_margin: activeStep === 2 }">
         Документооборот
       </h1>
-      <button
-        v-if="activeStep === 1"
-        @click="changeStepStatus"
-        class="login__button"
-      >
+      <button v-if="activeStep === 1" @click="changeStepStatus" class="login__button">
         Добро пожаловать!
       </button>
       <form v-else class="form" ref="form" @submit.prevent="handleSubmit">
         <label for="text">
-          <input
-            type="text"
-            id="email"
-            placeholder="Логин"
-            v-model="username"
-          />
+          <input type="text" id="email" placeholder="Логин" v-model="username" />
         </label>
         <label for="password">
-          <input
-            v-model="password"
-            type="password"
-            id="password"
-            placeholder="Пароль"
-          />
+          <input v-model="password" type="password" id="password" placeholder="Пароль" />
         </label>
         <button type="submit" class="form__button">Войти</button>
       </form>
@@ -100,42 +86,88 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width:500px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__welcome {
     display: flex;
-    padding-top: 78px;
+
+    margin: 78px 0 154px;
+
+    @media screen and (max-width:1024px) {
+      margin: 70px 0 60px;
+    }
+
+    @media screen and (max-width:500px) {
+      margin: 0 0 40px;
+    }
+
     img {
       width: 231px;
       max-height: 133px;
       height: auto;
       object-fit: cover;
+      object-position: center;
+
+      @media screen and (max-width:500px) {
+        // margin: 0 0 40px;
+        width: 200px;
+        max-height: 100px;
+      }
     }
   }
+
   &__title {
     font-style: normal;
     font-weight: 700;
     font-size: 70px;
     line-height: 85px;
     margin-bottom: 62px;
+
+    @media screen and (max-width:1024px) {
+      font-size: 48px;
+      margin-bottom: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
   }
+
   .title_margin {
     margin-bottom: 37px;
   }
+
   &__button {
     cursor: pointer;
     height: 100px;
     background: linear-gradient(180deg, #ffffff 41.67%, #e2dfdf 100%);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border: 1.5px solid #0c0b0b;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
-    width: 300px;
-
+    max-width: 300px;
+    width: 100%;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
-    line-height: 26px;
+    // line-height: 26px;
     color: #0c0b0b;
+
+    @media screen and (max-width:1024px) {
+
+      max-width: 250px;
+      font-size: 18px;
+      height: 70px;
+    }
   }
 }
+
 .form {
   max-width: 100%;
   width: 100%;
@@ -144,12 +176,17 @@ export default {
   justify-content: center;
   align-items: center;
 
+  @media screen and (max-width:500px) {
+    padding: 0 20px;
+  }
+
   label {
     max-width: 411px;
     width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 37px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
     &:last-of-type {
       margin-bottom: 29px;
@@ -170,6 +207,28 @@ export default {
     font-size: 22px;
     line-height: 26px;
 
+    &::placeholder {
+      color: #ADADAD;
+      font-size: 30px;
+      font-weight: 600;
+    }
+
+    @media screen and (max-width:1024px) {
+      font-size: 24px;
+
+      &::placeholder {
+        font-size: 24px;
+      }
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 18px;
+
+      &::placeholder {
+        font-size: 18px;
+      }
+    }
+
     color: black;
   }
 
@@ -187,8 +246,21 @@ export default {
     border: 1.5px solid #0c0b0b;
     border-radius: 8px;
     cursor: pointer;
+
+    color: #0C0B0B;
+    font-size: 30px;
+    font-weight: 600;
+
+    @media screen and (max-width:1024px) {
+      font-style: 24px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 18px;
+    }
   }
 }
+
 .forgot-password {
   margin-top: 37px;
   font-style: normal;
