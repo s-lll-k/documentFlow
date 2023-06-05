@@ -1,38 +1,38 @@
 <template>
-  <div class="navbar">
-    <div class="navbar__top">
-      <div class="navbar__burger" >
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+  <div>
+    <div v-if="isButtonVisible" class="burger-btn" @click="openNavbar">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-    <div class="navbar__person person">
-      <div class="person__content">
-        <img src="@/assets/images/user-icon.png" />
-        {{ user.username }}
+    <div :class="['navbar', {'opened': isNavbarOpen, 'closed': !isNavbarOpen}]">
+      <div class="navbar__person person">
+        <div class="person__content">
+          <img src="@/assets/images/user-icon.png" />
+          {{ user.username }}
+        </div>
       </div>
-    </div>
-    <div class="navbar__items">
-      <div v-for="(item, index) in navbarList" :key="item.title + index" class="navbar__item"
-        :class="{ active: $route.path === item.url }">
-        <nuxt-link :to="item.url"
-          v-if="item?.role === $store.getters.GET_USER.userRole ? true : item?.role === undefined ? true : false">
-          <img :src="item.icon" />
-          <span>{{ item.title }}</span>
-        </nuxt-link>
+      <div class="navbar__items">
+        <div v-for="(item, index) in navbarList" :key="item.title + index" class="navbar__item"
+          :class="{ active: $route.path === item.url }">
+          <nuxt-link :to="item.url"
+            v-if="item?.role === $store.getters.GET_USER.userRole ? true : item?.role === undefined ? true : false">
+            <img :src="item.icon" />
+            <span>{{ item.title }}</span>
+          </nuxt-link>
+        </div>
+        <a @click="logout" class="logout">
+          Выйти
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.00033 1.33334H12.0003C12.7337 1.33334 13.3337 1.93334 13.3337 2.66667V13.3333C13.3337 14.0667 12.7337 14.6667 12.0003 14.6667H6.00033C5.26699 14.6667 4.66699 14.0667 4.66699 13.3333V12H6.00033V13.3333H12.0003V2.66667H6.00033V4H4.66699V2.66667C4.66699 1.93334 5.26699 1.33334 6.00033 1.33334Z"
+              fill="#0C0B0B" />
+            <path
+              d="M6.72667 10.3933L7.66667 11.3333L11 8L7.66667 4.66667L6.72667 5.60667L8.44667 7.33334H2V8.66667H8.44667L6.72667 10.3933Z"
+              fill="#0C0B0B" />
+          </svg>
+        </a>
       </div>
-      <a @click="logout" class="logout">
-        Выйти
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M6.00033 1.33334H12.0003C12.7337 1.33334 13.3337 1.93334 13.3337 2.66667V13.3333C13.3337 14.0667 12.7337 14.6667 12.0003 14.6667H6.00033C5.26699 14.6667 4.66699 14.0667 4.66699 13.3333V12H6.00033V13.3333H12.0003V2.66667H6.00033V4H4.66699V2.66667C4.66699 1.93334 5.26699 1.33334 6.00033 1.33334Z"
-            fill="#0C0B0B" />
-          <path
-            d="M6.72667 10.3933L7.66667 11.3333L11 8L7.66667 4.66667L6.72667 5.60667L8.44667 7.33334H2V8.66667H8.44667L6.72667 10.3933Z"
-            fill="#0C0B0B" />
-        </svg>
-      </a>
     </div>
   </div>
 </template>
@@ -42,8 +42,9 @@ export default {
   data() {
     return {
       user: {},
-      //   selectedCategory: 0,
-      navbarList: [
+      isButtonVisible: false,
+      isNavbarOpen: false,
+        navbarList: [
         {
           title: "Новости",
           icon: require("@/assets/images/updates.png"),
@@ -80,7 +81,11 @@ export default {
   },
   created() {
     this.user = this.$store.getters.GET_USER;
-    // console.log(this.$route.path);
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
     logout() {
@@ -88,14 +93,40 @@ export default {
       this.$store.commit("SET_USER", {});
       this.$router.push({ path: "/login" });
     },
-    // selectCategory(i) {
-    //   this.selectedCategory = i;
-    // },
+    handleResize() {
+      this.isButtonVisible = window.innerWidth <= 1200;
+      this.isNavbarOpen = window.innerWidth > 1200
+    },
+    openNavbar() {
+      this.isNavbarOpen = this.isNavbarOpen ? false : true
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.burger-btn {
+    position: fixed;
+    left: 50px;
+    top: 20px;
+    z-index: 1;
+    display:  flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    height: 60px;
+    border-radius: 50%;
+    div {
+      width: 30px;
+      height: 4px;
+      margin-bottom: 3px;
+      background: black;
+      border-radius: 3px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+}
 .navbar {
   position: fixed;
   left: 0;
@@ -110,29 +141,6 @@ export default {
   &__top {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding-left: 37px;
-  }
-
-  &__burger {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-
-    cursor: pointer;
-    height: 60px;
-
-
-    div {
-
-      width: 30px;
-      height: 4px;
-      margin-bottom: 3px;
-      background: black;
-      border-radius: 3px;
-
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-    }
   }
 
   &__person {

@@ -35,6 +35,9 @@ export default {
     margin: 0 auto;
     padding: 60px 20px 0 400px;
     width: 100%;
+    @media screen and (max-width: 1200px) {
+      padding: 60px 20px 0;
+    }
   }
 }
 
