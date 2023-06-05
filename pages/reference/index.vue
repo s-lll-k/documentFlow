@@ -69,9 +69,6 @@ export default {
           : new Date(a.date) - new Date(b.date);
       });
     },
-    searchApplications(val) {
-      console.log(val);
-    },
     selectApplicationType(v, i) {
       this.categoryCode = v.code;
       this.selectedApplicationType = v.title;
@@ -147,16 +144,16 @@ export default {
       class="applications__block"
     >
         <div class="manager-tool">
-          <button class="manager-tool__btn" @click="editRef('')">
+          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('')">
             Отправить на доработку
           </button>
-          <button class="manager-tool__btn" @click="editRef('CANCELED')">
+          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
             Отклонить
           </button>
-          <button class="manager-tool__btn" @click="editRef('IN_PROGRESS')">
+          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'Создано'" @click="editRef('IN_PROGRESS')">
             Принять в работу
           </button>
-          <button class="manager-tool__btn" @click="editRef('CLOSED')">
+          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CLOSED')">
             Закрыть заявку
           </button>
         </div>

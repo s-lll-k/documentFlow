@@ -336,6 +336,9 @@ export default {
           nextEl: ".calendar__arrow.next",
           prevEl: ".calendar__arrow.prev",
         },
+      },
+      event: {
+        show: false
       }
     };
   },
@@ -434,6 +437,19 @@ export default {
       const activeIndexOfSlide = this.$refs.swiper.swiperInstance.realIndex;
       this.events = this.calendarMonths[activeIndexOfSlide].weeks.flat().filter((day) => day?.highlighted && day?.event);
       this.weekend = this.calendarMonths[activeIndexOfSlide].weeks.flat().filter((day) => day?.highlighted && !day?.event);
+    },
+    openEvent(eventName, eventDay, eventMonth) {
+      this.event = {
+        name: eventName,
+        day: eventDay,
+        month: eventMonth,
+        eventsNum: this.events.length,
+        weekendsNum: this.weekend.length
+      }
+      this.$store.dispatch('SET_EVENT', this.event);
+      this.$router.push({
+        path: "/event"
+      });
     }
   }
 };
@@ -466,10 +482,11 @@ export default {
                 <tbody>
                   <tr v-for="(week, index) in item.weeks" :key="index">
                     <td v-for="(day, dayIndex) in week" :key="dayIndex" class="day-cell"
-                      :style="{ 
+                      :style="{
                         'color': day?.highlighted && day?.event ? '#6588F9' : day?.highlighted && !day?.event ? '#28DB7A' : '#6D6D6D',
                         'cursor': day?.highlighted && day?.event ? 'pointer' : 'default'
                       }"
+                      @click="day?.event ? openEvent(day.name, day.day, item.monthTitle) : null"
                     >
                       {{ day?.day }}
                     </td>

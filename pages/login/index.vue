@@ -73,7 +73,6 @@ export default {
           <input v-model="password" type="password" id="password" placeholder="Пароль" />
         </label>
         <button type="submit" class="form__button">Войти</button>
-        <a class="forgot-password">Забыли парль?</a>
       </form>
     </main>
   </client-only>

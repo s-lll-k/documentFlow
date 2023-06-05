@@ -1,6 +1,7 @@
 export const state = () => ({
   loggedIn: process.client ? localStorage.getItem('loggedIn') : false,
   user: process.client ? JSON.parse(localStorage.getItem('user')) : {},
+  calendarEvent: null
 })
 
 export const getters = {
@@ -9,7 +10,9 @@ export const getters = {
 }
 
 export const actions = {
-
+  SET_EVENT({ commit }, obj) {
+    commit('SET_EVENT', obj);
+  }
 }
 
 export const mutations = {
@@ -18,5 +21,8 @@ export const mutations = {
   },
   SET_USER(state, payload) {
     state.user = payload
+  },
+  SET_EVENT(state, obj) {
+    state.calendarEvent = obj;
   }
 }

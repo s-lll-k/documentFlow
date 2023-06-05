@@ -35,6 +35,7 @@ export default {
             id="search"
             :style="{ width: `${width}` }"
             @input="searchItems()"
+            @change="searchItems()"
         />
     </label>
 </template>
