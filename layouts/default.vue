@@ -32,10 +32,8 @@ export default {
 <style lang="scss" scoped>
 .main {
   &__container {
-    padding-top: 60px;
     margin: 0 auto;
-    // padding-left: 400px;
-    padding: 60px 20px 0;
+    padding: 60px 20px 0 400px;
     width: 100%;
   }
 }
