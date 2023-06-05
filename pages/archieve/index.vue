@@ -87,8 +87,8 @@ export default {
       </div>
       <div class="applications__items">
         <div
-          v-for="(item, index) in archieve"
-          :key="item?.id + index"
+          v-for="item in archieve"
+          :key="item?.id"
           class="applications__item"
           @click="openReference(item?.id)"
         >
