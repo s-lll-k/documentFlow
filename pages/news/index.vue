@@ -58,8 +58,11 @@ export default {
       <h1 class="news__title">Новости</h1>
       <div class="news__items">
         <div class="news__item" v-for="(item, index) in news" :key="index">
-          <span>{{ moment(item.createdAt).locale("ru").format("L") }}</span>
-          <p>{{ item.text }}</p>
+          <h3>{{ item.theme }}</h3>
+          <div class="news__item-wrapper">
+            <span>{{ moment(item.createdAt).locale("ru").format("L") }}</span>
+            <p>{{ item.text }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -114,11 +117,18 @@ export default {
     width: 100%;
     border-bottom: 1px solid black;
     padding-bottom: 18px;
-    display: flex;
-    align-items: center;
-
     margin-bottom: 18px;
-
+    & + & {
+      margin-top: 30px;
+    }
+    &-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
     span,
     p {
       font-style: normal;

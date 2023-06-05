@@ -12,34 +12,59 @@ export default {
         this.event = this.$store.state.calendarEvent;
 
         console.log('this.event', this.event)
+    },
+
+    methods: {
+      goBack() {
+        this.$router.back();
+      }
     }
 };
 </script>
 
 <template>
-  <div v-if="event">
-    <div class="cards">
-      <div class="cards__item event">
-        <span>{{ event.eventsNum }}</span>
-        <span>Запланированные <br> события</span>
+  <div>
+    <button class="go-back-button" @click="goBack()">
+      <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.25 18.3333L0 9.99999L6.25 1.66666L7.35938 3.14582L2.21875 9.99999L7.35938 16.8542L6.25 18.3333Z" fill="black"/>
+      </svg>
+    </button>
+    <div v-if="event">
+      <div class="cards">
+        <div class="cards__item event">
+          <span>{{ event.eventsNum }}</span>
+          <span>Запланированные <br> события</span>
+        </div>
+        <div class="cards__item weekend">
+          <span>{{ event.weekendsNum }}</span>
+          <span>Выходные</span>
+        </div>
       </div>
-      <div class="cards__item weekend">
-        <span>{{ event.weekendsNum }}</span>
-        <span>Выходные</span>
-      </div>
-    </div>
-    <div class="event">
-      <div class="event__date">
-        {{ event.month }}, {{ event.day }}
-      </div>
-      <div class="event__card">
-        {{ event.name }}
+      <div class="event">
+        <div class="event__date">
+          {{ event.month }}, {{ event.day }}
+        </div>
+        <div class="event__card">
+          {{ event.name }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.go-back-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  margin-right: auto;
+}
 .cards {
   display: flex;
   justify-content: center;

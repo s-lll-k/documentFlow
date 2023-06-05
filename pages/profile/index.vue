@@ -16,7 +16,7 @@
         </label>
       </div>
     </div>
-    <button class="profile__button" @click="profileChanges(edit)">
+    <button v-if="user?.roles[0]?.name === 'ROLE_ADMIN'" class="profile__button" @click="profileChanges(edit)">
       {{ !edit ? "Редактировать данные" : "Сохранить данные" }}
     </button>
   </div>

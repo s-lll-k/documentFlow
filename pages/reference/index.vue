@@ -116,15 +116,15 @@ export default {
     async editRef(statusCode) {
       if (this.referenceInfo.id && statusCode) {
         await this.$axios
-          .patch("/api/doc/status", {
-            headers: {
-              Authorization: `Bearer ${this.$store.getters.GET_USER.token}`,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
+          .patch("/api/doc/status", 
+            {
               id: this.referenceInfo.id,
               statusCode: statusCode
-            })
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${this.$store.getters.GET_USER.token}`
+              },
           })
           .then(() => {
             this.$router.push({ path: "/applications" })
@@ -132,6 +132,9 @@ export default {
       } else {
         console.error('Не удалось прочитать статус или ID заявки')
       }
+    },
+    goBack() {
+      this.$router.back();
     }
   },
 };
@@ -144,7 +147,12 @@ export default {
       class="applications__block"
     >
         <div class="manager-tool">
-          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('')">
+          <button class="go-back-button" @click="goBack()">
+            <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.25 18.3333L0 9.99999L6.25 1.66666L7.35938 3.14582L2.21875 9.99999L7.35938 16.8542L6.25 18.3333Z" fill="black"/>
+            </svg>
+          </button>
+          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('REJECTED')">
             Отправить на доработку
           </button>
           <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
@@ -213,10 +221,24 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.go-back-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  margin-right: auto;
+}
+
 h1 {
   margin-bottom: 22px;
 }
 .manager-tool {
+  width: 100%;
   display: flex;
   margin-left: auto;
   margin-bottom: 50px;
