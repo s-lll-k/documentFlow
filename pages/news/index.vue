@@ -22,7 +22,50 @@ export default {
         },
       },
       news: [],
-      filteredNews: []
+      filteredNews: [],
+      managerSlides: [
+        {
+          url: '/newApplications',
+          name: 'Новые заявки',
+          img: '_nuxt/assets/images/universities.png'
+        },
+        {
+          url: '/applications',
+          name: 'Заявки',
+          img: '_nuxt/assets/images/universities.png'
+        },
+        {
+          url: '/archieve',
+          name: 'Архив заявок',
+          img: '_nuxt/assets/images/universities.png'
+        }
+      ],
+      studentSlides: [
+        {
+          url: '/applications',
+          name: 'Справка с места учебы',
+          img: '_nuxt/assets/images/universities.png',
+          type: 'Справка с места учебы'
+        },
+        {
+          url: '/applications',
+          name: 'Транскрипт',
+          img: '_nuxt/assets/images/transcript.png',
+          type: 'Транскрипт'
+        },
+        {
+          url: '/applications',
+          name: 'Справка о наличии гранта',
+          img: '_nuxt/assets/images/universities.png',
+          type: 'Справка о наличии гранта'
+        },
+        {
+          url: '/applications',
+          name: 'Справка о зачислении',
+          img: '_nuxt/assets/images/universities.png',
+          type: 'Справка о зачислении'
+        }
+      ],
     };
   },
   async created() {
@@ -48,6 +91,12 @@ export default {
         this.filteredNews = this.news;
       }
     },
+    goTo(url, selectedType) {
+      this.$router.push({ path: url });
+      if (selectedType) {
+        this.$store.dispatch('SET_TYPE', selectedType);
+      }
+    }
   }
 };
 </script>
@@ -56,11 +105,19 @@ export default {
   <div>
     <div class="navigation">
       <div class="swiper-button-prev prev-btn"></div>
-      <swiper ref="swiper" :options="swiperOptions" class="swiper">
-        <swiper-slide v-for="item in 4" :key="item" class="swiper-slide">
-          <div class="swiper-item">
-            <img src="@/assets/images/universities.png" />
-            <p>Справка с места учебы</p>
+      <swiper ref="swiper" :options="swiperOptions" class="swiper" v-if="$store.getters.GET_USER.roles[0] === 'ROLE_USER'">
+        <swiper-slide v-for="(item, index) in studentSlides" :key="index" class="swiper-slide">
+          <div class="swiper-item" @click="goTo(item.url, item.type)">
+            <img :src="item.img" />
+            <p>{{ item.name }}</p>
+          </div>
+        </swiper-slide>
+      </swiper>
+      <swiper ref="swiper" :options="swiperOptions" class="swiper" v-else>
+        <swiper-slide v-for="(item, index) in managerSlides" :key="index" class="swiper-slide">
+          <div class="swiper-item" @click="goTo(item.url)">
+            <img :src="item.img" />
+            <p>{{ item.name }}</p>
           </div>
         </swiper-slide>
       </swiper>
@@ -90,18 +147,20 @@ export default {
   justify-content: center;
 }
 .swiper-item {
+  cursor: pointer;
   max-width: 325px;
   width: 100%;
   height: 193px;
   border-radius: 8px;
   background: white;
-
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   p {
+    text-align: center;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;

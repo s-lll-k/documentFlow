@@ -19,12 +19,7 @@ export default {
       ],
       applications: [],
       filteredApplications: [],
-      applicationTypes: [
-        { title: "Транскрипт" },
-        { title: "Справка с места учебы" },
-        { title: "Справка о наличии гранта" },
-        { title: "Лист перезачета кредитов" },
-      ],
+      applicationTypes: [],
       show: false,
       user: {},
       showType: false,
@@ -34,6 +29,10 @@ export default {
     };
   },
   async created() {
+    if (this.$store.state.selectedTypeOfApplication) {
+        this.selectedApplicationType = this.$store.state.selectedTypeOfApplication
+        this.$store.dispatch('SET_TYPE', null);
+    }
     this.getApplicationTypes();
     const config = {
       headers: {
