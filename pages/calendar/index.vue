@@ -625,6 +625,21 @@ export default {
   margin: 0 auto;
   font-family: Arial, sans-serif;
   width: 300px;
+
+  @media screen and (max-width:500px) {
+    &__arrow {
+      bottom: -30%;
+      top: unset;
+
+      &.prev {
+        left: 30%;
+      }
+
+      &.next {
+        right: 30%;
+      }
+    }
+  }
 }
 
 table {
