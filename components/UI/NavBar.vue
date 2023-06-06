@@ -112,11 +112,17 @@ export default {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   cursor: pointer;
   height: 60px;
+  width: 60px;
   border-radius: 50%;
   z-index: 11001;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
+  background-color: #fff;
+
   div {
     width: 30px;
     height: 4px;
@@ -141,7 +147,8 @@ export default {
   overflow: auto;
   padding-bottom: 50px;
   transition: 0.3s all;
-z-index: 11000;
+  z-index: 11000;
+
   &.closed {
 
     transform: translateX(-100%);

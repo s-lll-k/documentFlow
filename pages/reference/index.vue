@@ -141,7 +141,7 @@ export default {
 </script>
 
 <template>
-  <div class="applications">
+  <div class="applications" style="padding-top: 30px;">
     <div v-if="$store.getters.GET_USER.userRole === 1" class="applications__block">
       <div class="manager-tool">
         <button class="go-back-button" @click="goBack()">
@@ -211,6 +211,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .go-back-button {
   width: 42px;
   height: 42px;
