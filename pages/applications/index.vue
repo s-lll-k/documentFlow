@@ -30,8 +30,8 @@ export default {
   },
   async created() {
     if (this.$store.state.selectedTypeOfApplication) {
-        this.selectedApplicationType = this.$store.state.selectedTypeOfApplication
-        this.$store.dispatch('SET_TYPE', null);
+      this.selectedApplicationType = this.$store.state.selectedTypeOfApplication
+      this.$store.dispatch('SET_TYPE', null);
     }
     this.getApplicationTypes();
     const config = {
@@ -360,6 +360,10 @@ export default {
         font-size: 18px;
       }
 
+      @media screen and (max-width:650px) {
+        text-align: center;
+      }
+
       @media screen and (max-width:500px) {
         // text-align: center;
         margin: auto;
@@ -395,7 +399,8 @@ export default {
   }
 
   &__button {
-    width: 295px;
+    max-width: 295px;
+    width: 100%;
     height: 59px;
 
     display: flex;
@@ -411,6 +416,11 @@ export default {
     border: 1.5px solid #0c0b0b;
     border-radius: 8px;
     cursor: pointer;
+
+    @media screen and (max-width:1200px) {
+      font-size: 20px;
+      height: 45px;
+    }
   }
 
   &__student {
@@ -513,9 +523,18 @@ export default {
   border-radius: 8px;
   margin: 64px 0 78px;
 
+  @media screen and (max-width:1200px) {
+    margin: 44px 0 58px;
+  }
+
+  @media screen and (max-width:500px) {
+    margin: 24px 0 38px;
+  }
+
   &__selected {
     cursor: pointer;
-    width: 433px;
+    max-width: 433px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -530,6 +549,11 @@ export default {
     font-size: 30px;
     line-height: 40px;
     color: #0c0b0b;
+
+    @media screen and (max-width:1200px) {
+      font-size: 24px;
+      padding: 6px 0;
+    }
 
     svg {
       margin-left: 8px;
@@ -561,6 +585,14 @@ export default {
     font-size: 30px;
     line-height: 40px;
     color: #0c0b0b;
+    @media screen and (max-width:1200px) {
+      // padding: 6px 0;
+      font-size: 24px;
+    }
+    @media screen and (max-width:500px) {
+      padding: 6px 0;
+      font-size: 20px;
+    }
 
     &:last-of-type {
       border-bottom: unset;
@@ -726,4 +758,5 @@ export default {
       cursor: pointer;
     }
   }
-}</style>
+}
+</style>
