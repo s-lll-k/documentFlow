@@ -16,6 +16,23 @@ export default {
         autoplay: {
           delay: 5000,
         },
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            // spaceBetween: 20
+          },
+          // when window width is >= 480px
+          768: {
+            slidesPerView: 2,
+            // spaceBetween: 30
+          },
+          // when window width is >= 640px
+          1200: {
+            slidesPerView: 4,
+            // spaceBetween: 40
+          }
+        },
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -89,6 +106,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .swiper-item {
   max-width: 325px;
   width: 100%;
@@ -113,14 +131,24 @@ export default {
 
 .news {
   padding-bottom: 50px;
+
   &__search {
     width: 250px;
   }
+
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width:768px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      margin-bottom: 20px;
+    }
   }
+
   &__title {
     font-style: normal;
     font-weight: 700;
@@ -129,6 +157,11 @@ export default {
     color: #0c0b0b;
 
     margin-bottom: 34px;
+
+    @media screen and (max-width:1200px) {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
   }
 
   &__items {
@@ -136,22 +169,35 @@ export default {
     flex-direction: column;
     width: 100%;
   }
+
   &__item {
     width: 100%;
     border-bottom: 1px solid black;
     padding-bottom: 18px;
     margin-bottom: 18px;
-    & + & {
+
+    &+& {
       margin-top: 30px;
     }
+
     &-wrapper {
       display: flex;
       align-items: center;
     }
+
     h3 {
       font-size: 24px;
       margin-bottom: 15px;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:768px) {
+        font-size: 18px;
+      }
     }
+
     span,
     p {
       font-style: normal;
@@ -159,6 +205,16 @@ export default {
       font-size: 24px;
       line-height: 32px;
       color: #0c0b0b;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      @media screen and (max-width:1200px) {
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
 
     span {
@@ -189,12 +245,15 @@ export default {
     width: 42px;
     height: 41px;
   }
+
   .swiper-button-prev {
     margin-right: 30px;
   }
+
   .swiper-button-next {
     margin-left: 30px;
   }
+
   .swiper-button-next:after,
   .swiper-container-rtl .swiper-button-prev:after,
   .swiper-button-prev:after,
@@ -207,6 +266,21 @@ export default {
     justify-content: center;
     align-items: center;
     font-weight: bold;
+  }
+
+  .swiper-item {
+    @media screen and (max-width:500px) {
+      img {
+        object-fit: cover;
+        object-position: center;
+        height: 70px;
+      }
+
+      p {
+        font-size: 18px;
+        text-align: center;
+      }
+    }
   }
 }
 </style>
