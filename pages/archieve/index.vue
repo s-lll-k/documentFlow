@@ -88,18 +88,20 @@ export default {
       <div class="applications__items">
         <div
           v-for="item in archieve"
-          :key="item?.id"
+          :key="item.id"
           class="applications__item"
-          @click="openReference(item?.id)"
+          @click="openReference(item.id)"
         >
-          <p>
-            {{ moment(item?.date).locale("ru").format("L") }}
-          </p>
-          <div>
-            <span> #{{ item?.id }} </span>
-            <h6>{{ item?.category }}</h6>
+          <div class="applications__item-id">
+              {{ item.id }}
           </div>
-          <span>{{ item?.status }}</span>
+          <div class="applications__item-wrapper">
+            <div class="applications__item-date">
+              {{ item.createdAt.split('T')[0] }}
+            </div>
+            <h6 class="applications__item-category">{{ item.category }}</h6>
+            <div class="applications__item-status">{{ item.status }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -148,50 +150,53 @@ export default {
     background: white;
     border-radius: 8px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
     padding: 14px 23px 30px 52px;
-
     margin-bottom: 47px;
-
-    p {
+    &-date {
       font-style: normal;
       font-weight: 400;
       font-size: 24px;
       line-height: 32px;
       color: #0c0b0b;
+      margin-right: auto;
+      text-align: left;
+      white-space: nowrap;
     }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      span {
-        margin-bottom: 14px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 27px;
-        color: #0c0b0b;
-      }
-      h6 {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 32px;
-        color: #0c0b0b;
-      }
+    &-category {
+      text-align: center;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: #0c0b0b;
+      max-width: 100%;
+      width: 100%;
+      flex-grow: 1;
     }
-
-    span {
+    &-status {
+      min-width: 100px;
       font-style: normal;
       font-weight: 400;
       font-size: 20px;
       line-height: 27px;
       color: #939393;
+      margin-left: auto;
+      text-align: right;
+    }
+    &-id {
+      text-align: center;
+      margin-bottom: 14px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 27px;
+      color: #0c0b0b;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 20px;
     }
 
     &:last-of-type {
