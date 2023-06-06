@@ -13,9 +13,9 @@ export default {
             <button class="content__btn" v-if="$store.getters.GET_USER.userRole === 2">
                 <img src="@/assets/images/applications/colocol.png" />
             </button>
-            <button class="content__btn">
+            <nuxt-link class="content__btn" :to="'/settings'">
                 <img src="@/assets/images/applications/settings.png" />
-            </button>
+            </nuxt-link>
         </div>
     </div>
 </template>
@@ -51,7 +51,7 @@ export default {
             object-fit: cover;
         }
 
-        &:last-of-type {
+        &:last-child {
             margin-right: 0;
         }
     }
