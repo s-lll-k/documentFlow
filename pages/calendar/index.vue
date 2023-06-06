@@ -351,11 +351,11 @@ export default {
         const date = new Date(selectedMonth);
         const year = date.getFullYear();
         const month = date.getMonth();
-        
+
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const numDays = lastDay.getDate();
-        
+
         const weeks = [];
         let week = [];
         let dayCounter = 1;
@@ -390,7 +390,7 @@ export default {
         }
 
         const monthName = date.toLocaleString('ru-RU', { month: 'long' });
-        
+
         this.calendarMonths.push({
           monthTitle: monthName.charAt(0).toUpperCase() + monthName.slice(1),
           monthNumber: selectedMonth.split('-')[1],
@@ -409,7 +409,7 @@ export default {
             const day = week[index];
             if (day === null) continue;
             const currentDate = `${month.year}-${month.monthNumber}-${String(day).padStart(2, '0')}`;
-            
+
             const matchingEvent = this.calendarEvents.find(
               (event) => event.date === currentDate);
 
@@ -481,13 +481,10 @@ export default {
                 </thead>
                 <tbody>
                   <tr v-for="(week, index) in item.weeks" :key="index">
-                    <td v-for="(day, dayIndex) in week" :key="dayIndex" class="day-cell"
-                      :style="{
-                        'color': day?.highlighted && day?.event ? '#6588F9' : day?.highlighted && !day?.event ? '#28DB7A' : '#6D6D6D',
-                        'cursor': day?.highlighted && day?.event ? 'pointer' : 'default'
-                      }"
-                      @click="day?.event ? openEvent(day.name, day.day, item.monthTitle) : null"
-                    >
+                    <td v-for="(day, dayIndex) in week" :key="dayIndex" class="day-cell" :style="{
+                      'color': day?.highlighted && day?.event ? '#6588F9' : day?.highlighted && !day?.event ? '#28DB7A' : '#6D6D6D',
+                      'cursor': day?.highlighted && day?.event ? 'pointer' : 'default'
+                    }" @click="day?.event ? openEvent(day.name, day.day, item.monthTitle) : null">
                       {{ day?.day }}
                     </td>
                   </tr>
@@ -498,8 +495,7 @@ export default {
         </swiper-slide>
       </swiper>
       <div class="calendar__arrow prev" role="button" aria-label="button prev">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-          height="24" viewBox="0 0 24 24" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
@@ -516,6 +512,7 @@ export default {
 .swiper {
   margin-bottom: 60px;
 }
+
 .navigation {
   position: relative;
 }
@@ -556,6 +553,17 @@ export default {
   gap: 0 85px;
   margin-bottom: 22px;
 
+  @media screen and (max-width:1200px) {
+    // height: 100px;
+    gap: 0 30px;
+    margin-bottom: 25px;
+  }
+
+  @media screen and (max-width:690px) {
+    flex-direction: column;
+    gap: 25px 0;
+  }
+
   &__item {
     max-width: 358px;
     width: 100%;
@@ -563,10 +571,20 @@ export default {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
     border-radius: 14px;
 
+    padding: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0 60px;
+
+    @media screen and (max-width:1200px) {
+      height: 100px;
+      gap: 0 25px;
+    }
+
+    @media screen and (max-width:690px) {
+      flex-direction: column;
+    }
 
     span {
       font-weight: 600;
@@ -574,10 +592,18 @@ export default {
 
       &:first-child {
         font-size: 28px;
+
+        @media screen and (max-width:1200px) {
+          font-size: 24px;
+        }
       }
 
       &:last-child {
         font-size: 22px;
+
+        @media screen and (max-width:1200px) {
+          font-size: 18px;
+        }
       }
 
       line-height: 29px;
@@ -594,6 +620,7 @@ export default {
     }
   }
 }
+
 .calendar {
   margin: 0 auto;
   font-family: Arial, sans-serif;

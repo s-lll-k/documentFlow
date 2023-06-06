@@ -5,7 +5,7 @@
       <div></div>
       <div></div>
     </div>
-    <div :class="['navbar', {'opened': isNavbarOpen, 'closed': !isNavbarOpen}]">
+    <div :class="['navbar', { 'opened': isNavbarOpen, 'closed': !isNavbarOpen }]">
       <div class="navbar__person person">
         <div class="person__content">
           <img src="@/assets/images/user-icon.png" />
@@ -44,7 +44,7 @@ export default {
       user: {},
       isButtonVisible: false,
       isNavbarOpen: false,
-        navbarList: [
+      navbarList: [
         {
           title: "Новости",
           icon: require("@/assets/images/updates.png"),
@@ -106,27 +106,30 @@ export default {
 
 <style lang="scss" scoped>
 .burger-btn {
-    position: fixed;
-    left: 50px;
-    top: 20px;
-    z-index: 1;
-    display:  flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    height: 60px;
-    border-radius: 50%;
-    div {
-      width: 30px;
-      height: 4px;
-      margin-bottom: 3px;
-      background: black;
-      border-radius: 3px;
-      &:last-of-type {
-        margin-bottom: 0;
-      }
+  position: fixed;
+  left: 50px;
+  top: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  height: 60px;
+  border-radius: 50%;
+  z-index: 11001;
+  div {
+    width: 30px;
+    height: 4px;
+    margin-bottom: 3px;
+    background: black;
+    border-radius: 3px;
+
+    &:last-of-type {
+      margin-bottom: 0;
     }
+  }
 }
+
 .navbar {
   position: fixed;
   left: 0;
@@ -137,6 +140,16 @@ export default {
   height: 100vh;
   overflow: auto;
   padding-bottom: 50px;
+  transition: 0.3s all;
+z-index: 11000;
+  &.closed {
+
+    transform: translateX(-100%);
+  }
+
+  &.opened {
+    transform: translateX(0);
+  }
 
   &__top {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

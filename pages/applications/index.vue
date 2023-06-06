@@ -107,7 +107,7 @@ export default {
         : alert("Выберите тип заявки");
     },
     openReference(id) {
-      this.$router.push({path: "/reference", query: {referenceId: id}})
+      this.$router.push({ path: "/reference", query: { referenceId: id } })
     },
     async openPopup() {
       await this.$axios
@@ -128,7 +128,7 @@ export default {
           this.showPopup = true;
         })
         .catch((err) => console.error(err))
-        .finally(() => {});
+        .finally(() => { });
     },
     closePopup() {
       this.description = "";
@@ -143,35 +143,16 @@ export default {
 
 <template>
   <div class="applications">
-    <div
-      v-if="$store.getters.GET_USER.userRole === 1"
-      class="applications__block"
-    >
+    <div v-if="$store.getters.GET_USER.userRole === 1" class="applications__block">
       <div class="applications__filter">
         <h2 class="applications__title">Заявки</h2>
         <div class="search">
           <div class="filter">
-            <p
-              class="filter__title"
-              @click="switchItemsVisibility"
-              v-click-outside="externalClick"
-            >
+            <p class="filter__title" @click="switchItemsVisibility" v-click-outside="externalClick">
               Фильтровать
-              <svg
-                :class="{ reveal: show, closed: !show }"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L7 7L13 1"
-                  stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+              <svg :class="{ reveal: show, closed: !show }" width="14" height="8" viewBox="0 0 14 8" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </p>
             <div v-show="show" class="filter__items">
@@ -188,14 +169,10 @@ export default {
         </div>
       </div>
       <div class="applications__items">
-        <div
-          v-for="item in filteredApplications"
-          :key="item.id"
-          class="applications__item"
-          @click="openReference(item.id)"
-        >
+        <div v-for="item in filteredApplications" :key="item.id" class="applications__item"
+          @click="openReference(item.id)">
           <div class="applications__item-id">
-              {{ item.id }}
+            {{ item.id }}
           </div>
           <div class="applications__item-wrapper">
             <div class="applications__item-date">
@@ -211,36 +188,16 @@ export default {
       <div v-if="!createApplication" class="applications__step1">
         <h2 class="applications__title">Создать заявку</h2>
         <div class="selector">
-          <div
-            class="selector__selected"
-            @click="openApplicationTypes"
-            v-click-outside="externalClick"
-          >
+          <div class="selector__selected" @click="openApplicationTypes" v-click-outside="externalClick">
             {{ selectedApplicationType ?? "Тип заявки" }}
-            <svg
-              :class="{ reveal: showType, closed: !showType }"
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 1L7 7L13 1"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg :class="{ reveal: showType, closed: !showType }" width="14" height="8" viewBox="0 0 14 8" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
           <div v-show="showType" class="selector__items">
-            <div
-              class="selector__item"
-              v-for="(option, index) in applicationTypes"
-              :key="option.title + index"
-              @click="selectApplicationType(option, index)"
-            >
+            <div class="selector__item" v-for="(option, index) in applicationTypes" :key="option.title + index"
+              @click="selectApplicationType(option, index)">
               {{ option.title }}
             </div>
           </div>
@@ -252,11 +209,7 @@ export default {
       <div v-if="createApplication" class="profile">
         <h2>{{ selectedApplicationType }}</h2>
         <div class="profile__items">
-          <div
-            class="profile__item"
-            v-for="(item, index) in profileInfo"
-            :key="index"
-          >
+          <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
             <p>
               {{ item.title }}:<span>{{ user[item.backendKey] }}</span>
             </p>
@@ -264,10 +217,7 @@ export default {
         </div>
         <div class="profile__commentaries">
           <h3>Комментарии</h3>
-          <textarea
-            v-model="description"
-            style="width: 100%; border-radius: 6px"
-          />
+          <textarea v-model="description" style="width: 100%; border-radius: 6px" />
         </div>
         <button @click="openPopup" class="profile__button">
           Подать заявку
@@ -287,6 +237,7 @@ export default {
 .applications {
   display: flex;
   padding-bottom: 50px;
+
   &__block {
     display: flex;
     flex-direction: column;
@@ -301,14 +252,24 @@ export default {
     justify-content: space-between;
     width: 100%;
   }
+
   &__title {
     width: 100%;
     text-align: left;
     font-style: normal;
     font-weight: 700;
     font-size: 34px;
-    line-height: 45px;
+    // line-height: 45px;
     color: #0c0b0b;
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
   }
 
   &__items {
@@ -318,6 +279,7 @@ export default {
     margin-top: 75px;
     width: 100%;
   }
+
   &__item {
     cursor: pointer;
     max-width: 784px;
@@ -327,6 +289,7 @@ export default {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
     padding: 14px 23px 30px 52px;
     margin-bottom: 47px;
+
     &-date {
       font-style: normal;
       font-weight: 400;
@@ -337,6 +300,7 @@ export default {
       text-align: left;
       white-space: nowrap;
     }
+
     &-category {
       text-align: center;
       font-style: normal;
@@ -348,6 +312,7 @@ export default {
       width: 100%;
       flex-grow: 1;
     }
+
     &-status {
       min-width: 100px;
       font-style: normal;
@@ -358,6 +323,7 @@ export default {
       margin-left: auto;
       text-align: right;
     }
+
     &-id {
       text-align: center;
       margin-bottom: 14px;
@@ -367,6 +333,7 @@ export default {
       line-height: 27px;
       color: #0c0b0b;
     }
+
     &-wrapper {
       display: flex;
       flex-direction: row;
@@ -378,8 +345,10 @@ export default {
       margin-bottom: 0;
     }
   }
+
   &__button {
-    width: 295px;
+    max-width: 295px;
+    width: 100%;
     height: 59px;
 
     display: flex;
@@ -395,7 +364,18 @@ export default {
     border: 1.5px solid #0c0b0b;
     border-radius: 8px;
     cursor: pointer;
+
+    @media screen and (max-width:1200px) {
+      font-size: 20px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 18px;
+      height: 46px;
+
+    }
   }
+
   &__student {
     width: 100%;
     display: flex;
@@ -410,6 +390,7 @@ export default {
     width: 100%;
   }
 }
+
 .search {
   display: flex;
   align-items: center;
@@ -442,6 +423,7 @@ export default {
   svg {
     margin-left: 3px;
   }
+
   &__items {
     display: flex;
     flex-direction: column;
@@ -456,19 +438,23 @@ export default {
     top: 100%;
     left: 8%;
   }
+
   &__item {
     cursor: pointer;
     margin-bottom: 6px;
+
     &:last-of-type {
       margin-top: 6px;
       margin-bottom: 0;
     }
   }
 }
+
 .line {
   width: 100%;
   border-bottom: 1px solid black;
 }
+
 .selector {
   display: flex;
   flex-direction: column;
@@ -478,9 +464,18 @@ export default {
   border-radius: 8px;
   margin: 64px 0 78px;
 
+  @media screen and (max-width:1200px) {
+    margin: 44px 0 58px;
+  }
+
+  @media screen and (max-width:500px) {
+    margin: 24px 0 38px;
+  }
+
   &__selected {
     cursor: pointer;
-    width: 433px;
+    max-width: 433px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -496,6 +491,16 @@ export default {
     line-height: 40px;
     color: #0c0b0b;
 
+    @media screen and (max-width:1200px) {
+      font-size: 24px;
+
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 20px;
+      padding: 6px 0;
+    }
+
     svg {
       margin-left: 8px;
     }
@@ -510,7 +515,9 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 23px 28px 17px;
+
   }
+
   &__item {
     cursor: pointer;
     display: flex;
@@ -526,34 +533,51 @@ export default {
     line-height: 40px;
     color: #0c0b0b;
 
+    @media screen and (max-width:1200px) {
+      font-size: 24px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 18px;
+      padding: 6px 0;
+
+    }
+
     &:last-of-type {
       border-bottom: unset;
     }
   }
 }
+
 .reveal {
   transform: rotate(-180deg);
   animation-name: reveal;
   animation-duration: 0.4s;
+
   @keyframes reveal {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(-180deg);
     }
   }
+
   path {
     fill: gray;
   }
 }
+
 .closed {
   animation-name: closed;
   animation-duration: 0.4s;
+
   @keyframes closed {
     0% {
       transform: rotate(180deg);
     }
+
     100% {
       transform: rotate(0deg);
     }
@@ -595,6 +619,7 @@ export default {
       line-height: 25px;
     }
   }
+
   &__commentaries {
     display: flex;
     flex-direction: column;
@@ -610,6 +635,7 @@ export default {
 
       color: #060606;
     }
+
     textarea {
       margin-top: 16px;
       width: 100%;
@@ -619,6 +645,7 @@ export default {
       outline: unset;
     }
   }
+
   &__button {
     width: 100%;
 
@@ -635,6 +662,7 @@ export default {
     text-align: center;
   }
 }
+
 .popup {
   display: flex;
   flex-direction: column;
@@ -678,5 +706,4 @@ export default {
       cursor: pointer;
     }
   }
-}
-</style>
+}</style>

@@ -73,7 +73,7 @@ export default {
       this.showType = false;
     },
     openReference(id) {
-      this.$router.push({path: "/reference", query: {referenceId: id}})
+      this.$router.push({ path: "/reference", query: { referenceId: id } })
     }
   },
 };
@@ -86,14 +86,9 @@ export default {
         <h2 class="applications__title">Архив заявок</h2>
       </div>
       <div class="applications__items">
-        <div
-          v-for="item in archieve"
-          :key="item.id"
-          class="applications__item"
-          @click="openReference(item.id)"
-        >
+        <div v-for="item in archieve" :key="item.id" class="applications__item" @click="openReference(item.id)">
           <div class="applications__item-id">
-              {{ item.id }}
+            {{ item.id }}
           </div>
           <div class="applications__item-wrapper">
             <div class="applications__item-date">
@@ -112,6 +107,7 @@ export default {
 .applications {
   display: flex;
   padding-bottom: 50px;
+
   &__block {
     display: flex;
     flex-direction: column;
@@ -126,6 +122,7 @@ export default {
     justify-content: space-between;
     width: 100%;
   }
+
   &__title {
     width: 100%;
     text-align: left;
@@ -134,6 +131,15 @@ export default {
     font-size: 34px;
     line-height: 45px;
     color: #0c0b0b;
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
   }
 
   &__items {
@@ -143,6 +149,7 @@ export default {
     margin-top: 75px;
     width: 100%;
   }
+
   &__item {
     cursor: pointer;
     max-width: 784px;
@@ -152,6 +159,11 @@ export default {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
     padding: 14px 23px 30px 52px;
     margin-bottom: 47px;
+
+    @media screen and (max-width:500px) {
+      padding: 20px;
+    }
+
     &-date {
       font-style: normal;
       font-weight: 400;
@@ -161,7 +173,17 @@ export default {
       margin-right: auto;
       text-align: left;
       white-space: nowrap;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-category {
       text-align: center;
       font-style: normal;
@@ -172,7 +194,17 @@ export default {
       max-width: 100%;
       width: 100%;
       flex-grow: 1;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-status {
       min-width: 100px;
       font-style: normal;
@@ -182,7 +214,17 @@ export default {
       color: #939393;
       margin-left: auto;
       text-align: right;
+
+      @media screen and (max-width:1200px) {
+        font-size: 18px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-id {
       text-align: center;
       margin-bottom: 14px;
@@ -192,17 +234,25 @@ export default {
       line-height: 27px;
       color: #0c0b0b;
     }
+
     &-wrapper {
       display: flex;
       flex-direction: row;
       justify-content: center;
       gap: 20px;
+
+      @media screen and (max-width:500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     &:last-of-type {
       margin-bottom: 0;
     }
   }
+
   &__button {
     width: 295px;
     height: 59px;
@@ -221,6 +271,7 @@ export default {
     border-radius: 8px;
     cursor: pointer;
   }
+
   &__student {
     width: 100%;
     display: flex;
@@ -228,6 +279,7 @@ export default {
     align-items: center;
   }
 }
+
 .search {
   display: flex;
   align-items: center;
@@ -260,6 +312,7 @@ export default {
   svg {
     margin-left: 3px;
   }
+
   &__items {
     display: flex;
     flex-direction: column;
@@ -274,19 +327,23 @@ export default {
     top: 100%;
     left: 8%;
   }
+
   &__item {
     cursor: pointer;
     margin-bottom: 6px;
+
     &:last-of-type {
       margin-top: 6px;
       margin-bottom: 0;
     }
   }
 }
+
 .line {
   width: 100%;
   border-bottom: 1px solid black;
 }
+
 .selector {
   display: flex;
   flex-direction: column;
@@ -329,6 +386,7 @@ export default {
     border-bottom-right-radius: 8px;
     padding: 23px 28px 17px;
   }
+
   &__item {
     cursor: pointer;
     display: flex;
@@ -349,29 +407,36 @@ export default {
     }
   }
 }
+
 .reveal {
   transform: rotate(-180deg);
   animation-name: reveal;
   animation-duration: 0.4s;
+
   @keyframes reveal {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(-180deg);
     }
   }
+
   path {
     fill: gray;
   }
 }
+
 .closed {
   animation-name: closed;
   animation-duration: 0.4s;
+
   @keyframes closed {
     0% {
       transform: rotate(180deg);
     }
+
     100% {
       transform: rotate(0deg);
     }

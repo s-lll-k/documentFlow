@@ -1,12 +1,9 @@
 <template>
   <div class="profile">
-    <h1 class="profile__title">Информация о {{$store.getters.GET_USER.userRole === 1 ? "менеджере" : "студенте"}}</h1>
+    <h1 class="profile__title">Информация о {{ $store.getters.GET_USER.userRole === 1 ? "менеджере" : "студенте" }}</h1>
     <div class="profile__items">
-      <div
-        class="profile__item"
-        v-for="(item, index) in $store.getters.GET_USER.userRole === 1 ? managerProfileInfo : profileInfo"
-        :key="index"
-      >
+      <div class="profile__item"
+        v-for="(item, index) in $store.getters.GET_USER.userRole === 1 ? managerProfileInfo : profileInfo" :key="index">
         <p v-if="!edit">
           {{ item.title }}:<span>{{ user[item.backendKey] }}</span>
         </p>
@@ -77,7 +74,7 @@ export default {
       await this.$axios
         .put(
           `/api/users/profile/?username=` +
-            this.$store.getters.GET_USER.username,
+          this.$store.getters.GET_USER.username,
           this.user,
           {
             headers: {
@@ -90,7 +87,7 @@ export default {
           alert(res.data);
         })
         .catch((err) => console.error(err))
-        .finally(() => {});
+        .finally(() => { });
     },
   },
 };
@@ -101,14 +98,25 @@ export default {
   display: flex;
   flex-direction: column;
   padding-bottom: 50px;
+
   &__title {
     font-style: normal;
     font-weight: 700;
     font-size: 34px;
-    line-height: 45px;
+    // line-height: 45px;
     color: #0c0b0b;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
   }
+
   &__items {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -116,17 +124,35 @@ export default {
     grid-gap: 20px;
 
     margin-top: 120px;
+
+    @media screen and (max-width:501px) {
+      margin-top: 50px;
+      // flex-direction: column;
+      // align-items: flex-start;
+      grid-template-columns: 1fr;
+    }
+
   }
+
   &__item {
     display: flex;
     align-items: center;
+
 
     p {
       font-style: normal;
       font-weight: 700;
       font-size: 24px;
-      line-height: 32px;
+      // line-height: 32px;
       color: #0c0b0b;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
 
     span {
@@ -134,6 +160,14 @@ export default {
       font-size: 21px;
       margin-left: 8px;
       line-height: 25px;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
   }
 
