@@ -38,7 +38,7 @@ export default {
       .get(`/api/users/me`, config)
       .then((res) => (this.user = res.data))
       .catch((err) => console.error(err));
-    
+
     await this.$axios
       .get(`/api/doc/${this.$route.query.referenceId}`, config)
       .then((res) => (this.referenceInfo = res.data))
@@ -104,7 +104,7 @@ export default {
           this.showPopup = true;
         })
         .catch((err) => console.error(err))
-        .finally(() => {});
+        .finally(() => { });
     },
     closePopup() {
       this.description = "";
@@ -116,7 +116,7 @@ export default {
     async editRef(statusCode) {
       if (this.referenceInfo.id && statusCode) {
         await this.$axios
-          .patch("/api/doc/status", 
+          .patch("/api/doc/status",
             {
               id: this.referenceInfo.id,
               statusCode: statusCode
@@ -125,7 +125,7 @@ export default {
               headers: {
                 Authorization: `Bearer ${this.$store.getters.GET_USER.token}`
               },
-          })
+            })
           .then(() => {
             this.$router.push({ path: "/applications" })
           })
@@ -141,64 +141,54 @@ export default {
 </script>
 
 <template>
-  <div class="applications">
-    <div
-      v-if="$store.getters.GET_USER.userRole === 1"
-      class="applications__block"
-    >
-        <div class="manager-tool">
-          <button class="go-back-button" @click="goBack()">
-            <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6.25 18.3333L0 9.99999L6.25 1.66666L7.35938 3.14582L2.21875 9.99999L7.35938 16.8542L6.25 18.3333Z" fill="black"/>
-            </svg>
-          </button>
-          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('REJECTED')">
-            Отправить на доработку
-          </button>
-          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
-            Отклонить
-          </button>
-          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'Создано'" @click="editRef('IN_PROGRESS')">
-            Принять в работу
-          </button>
-          <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CLOSED')">
-            Закрыть заявку
-          </button>
+  <div class="applications" style="padding-top: 30px;">
+    <div v-if="$store.getters.GET_USER.userRole === 1" class="applications__block">
+      <div class="manager-tool">
+        <button class="go-back-button" @click="goBack()">
+          <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.25 18.3333L0 9.99999L6.25 1.66666L7.35938 3.14582L2.21875 9.99999L7.35938 16.8542L6.25 18.3333Z"
+              fill="black" />
+          </svg>
+        </button>
+        <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('REJECTED')">
+          Отправить на доработку
+        </button>
+        <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
+          Отклонить
+        </button>
+        <button class="manager-tool__btn" v-if="referenceInfo?.status === 'Создано'" @click="editRef('IN_PROGRESS')">
+          Принять в работу
+        </button>
+        <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CLOSED')">
+          Закрыть заявку
+        </button>
+      </div>
+      <h1>#{{ referenceInfo?.id }}</h1>
+      <h2>{{ referenceInfo?.category }}</h2>
+      <div class="profile__items" v-if="referenceInfo">
+        <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
+          <p>
+            {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
+          </p>
         </div>
-        <h1>#{{referenceInfo?.id}}</h1>
-        <h2>{{ referenceInfo?.category }}</h2>
-        <div class="profile__items" v-if="referenceInfo">
-          <div
-            class="profile__item"
-            v-for="(item, index) in profileInfo"
-            :key="index"
-          >
-            <p>
-              {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
-            </p>
-          </div>
+      </div>
+      <div class="profile__commentaries">
+        <h3>Комментарии</h3>
+        <div class="profile__comment">
+          <span v-if="!referenceInfo?.description.trim()">
+            Комментарии отсутствуют
+          </span>
+          <span v-else>
+            {{ referenceInfo.description }}
+          </span>
         </div>
-        <div class="profile__commentaries">
-          <h3>Комментарии</h3>
-          <div class="profile__comment">
-            <span v-if="!referenceInfo?.description.trim()">
-              Комментарии отсутствуют
-            </span>
-            <span v-else >
-              {{ referenceInfo.description }}
-            </span>
-          </div>
-        </div>
+      </div>
     </div>
     <div v-else class="applications__student">
       <div class="profile" v-if="referenceInfo">
-        <h2>{{ referenceInfo.category }} #{{referenceInfo.id}}</h2>
+        <h2>{{ referenceInfo.category }} #{{ referenceInfo.id }}</h2>
         <div class="profile__items">
-          <div
-            class="profile__item"
-            v-for="(item, index) in profileInfo"
-            :key="index"
-          >
+          <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
             <p>
               {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
             </p>
@@ -210,7 +200,7 @@ export default {
             <span v-if="!referenceInfo.description.trim()">
               Комментарии отсутствуют
             </span>
-            <span v-else >
+            <span v-else>
               {{ referenceInfo.description }}
             </span>
           </div>
@@ -221,6 +211,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .go-back-button {
   width: 42px;
   height: 42px;
@@ -237,12 +228,18 @@ export default {
 h1 {
   margin-bottom: 22px;
 }
+
 .manager-tool {
   width: 100%;
   display: flex;
   margin-left: auto;
   margin-bottom: 50px;
   gap: 20px;
+
+  @media screen and (max-width:650px) {
+    flex-direction: column;
+  }
+
   &__btn {
     cursor: pointer;
     padding: 8px 13px;
@@ -258,9 +255,11 @@ h1 {
     color: #000000;
   }
 }
+
 .applications {
   display: flex;
   padding-bottom: 50px;
+
   &__block {
     display: flex;
     flex-direction: column;
@@ -275,6 +274,7 @@ h1 {
     justify-content: space-between;
     width: 100%;
   }
+
   &__title {
     width: 100%;
     text-align: left;
@@ -292,6 +292,7 @@ h1 {
     margin-top: 75px;
     width: 100%;
   }
+
   &__item {
     max-width: 784px;
     width: 100%;
@@ -327,6 +328,7 @@ h1 {
         line-height: 27px;
         color: #0c0b0b;
       }
+
       h6 {
         font-style: normal;
         font-weight: 600;
@@ -348,6 +350,7 @@ h1 {
       margin-bottom: 0;
     }
   }
+
   &__button {
     width: 295px;
     height: 59px;
@@ -366,6 +369,7 @@ h1 {
     border-radius: 8px;
     cursor: pointer;
   }
+
   &__student {
     width: 100%;
     display: flex;
@@ -380,6 +384,7 @@ h1 {
     width: 100%;
   }
 }
+
 .search {
   display: flex;
   align-items: center;
@@ -412,6 +417,7 @@ h1 {
   svg {
     margin-left: 3px;
   }
+
   &__items {
     display: flex;
     flex-direction: column;
@@ -426,19 +432,23 @@ h1 {
     top: 100%;
     left: 8%;
   }
+
   &__item {
     cursor: pointer;
     margin-bottom: 6px;
+
     &:last-of-type {
       margin-top: 6px;
       margin-bottom: 0;
     }
   }
 }
+
 .line {
   width: 100%;
   border-bottom: 1px solid black;
 }
+
 .selector {
   display: flex;
   flex-direction: column;
@@ -481,6 +491,7 @@ h1 {
     border-bottom-right-radius: 8px;
     padding: 23px 28px 17px;
   }
+
   &__item {
     cursor: pointer;
     display: flex;
@@ -501,29 +512,36 @@ h1 {
     }
   }
 }
+
 .reveal {
   transform: rotate(-180deg);
   animation-name: reveal;
   animation-duration: 0.4s;
+
   @keyframes reveal {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(-180deg);
     }
   }
+
   path {
     fill: gray;
   }
 }
+
 .closed {
   animation-name: closed;
   animation-duration: 0.4s;
+
   @keyframes closed {
     0% {
       transform: rotate(180deg);
     }
+
     100% {
       transform: rotate(0deg);
     }
@@ -533,29 +551,67 @@ h1 {
 .profile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
+  padding-bottom: 50px;
+
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    // line-height: 45px;
+    color: #0c0b0b;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
+  }
+
+  &__commentaries {
+    margin: 25px auto 0 0;
+  }
+
 
   &__items {
-    width: 100%;
     display: grid;
     grid-template-columns: 2fr 1fr;
     justify-content: space-between;
     grid-gap: 20px;
 
-    margin-top: 68px;
+    margin-top: 120px;
+
+    @media screen and (max-width:501px) {
+      margin-top: 50px;
+      // flex-direction: column;
+      // align-items: flex-start;
+      grid-template-columns: 1fr;
+    }
+
   }
 
   &__item {
     display: flex;
     align-items: center;
 
+
     p {
       font-style: normal;
       font-weight: 700;
       font-size: 24px;
-      line-height: 32px;
+      // line-height: 32px;
       color: #0c0b0b;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
 
     span {
@@ -563,48 +619,36 @@ h1 {
       font-size: 21px;
       margin-left: 8px;
       line-height: 25px;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
   }
-  &__commentaries {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
 
-    margin-top: 46px;
-
-    h3 {
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 32px;
-
-      color: #060606;
-    }
-    textarea {
-      margin-top: 16px;
-      width: 100%;
-      border-radius: 6px;
-      height: 61px;
-      padding: 10px 12px;
-      outline: unset;
-    }
-  }
   &__button {
-    width: 100%;
-
-    margin-top: 100px;
-    width: 260px;
+    margin-top: 68px;
+    width: max-content;
+    max-width: 100%;
+    padding: 0 20px;
     height: 60px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 4px;
+    background: white;
+    border: unset;
+    cursor: pointer;
+
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 19px;
     line-height: 32px;
-    cursor: pointer;
     color: #0c0b0b;
-    text-align: center;
   }
 }
+
 .popup {
   display: flex;
   flex-direction: column;

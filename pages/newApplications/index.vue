@@ -53,7 +53,7 @@ export default {
         this.applications = [...res.data];
         this.filteredApplications = this.applications;
       })
-      .catch((err) => {console.error(err)});
+      .catch((err) => { console.error(err) });
   },
   methods: {
     async getApplicationTypes() {
@@ -114,7 +114,7 @@ export default {
         : alert("Выберите тип заявки");
     },
     openReference(id) {
-      this.$router.push({path: "/reference", query: {referenceId: id}})
+      this.$router.push({ path: "/reference", query: { referenceId: id } })
     },
     async openPopup() {
       await this.$axios
@@ -135,7 +135,7 @@ export default {
           this.showPopup = true;
         })
         .catch((err) => console.error(err))
-        .finally(() => {});
+        .finally(() => { });
     },
     closePopup() {
       this.description = "";
@@ -150,35 +150,16 @@ export default {
 
 <template>
   <div class="applications">
-    <div
-      v-if="$store.getters.GET_USER.userRole === 1"
-      class="applications__block"
-    >
+    <div v-if="$store.getters.GET_USER.userRole === 1" class="applications__block">
       <div class="applications__filter">
         <h2 class="applications__title">Новые заявки</h2>
         <div class="search">
           <div class="filter">
-            <p
-              class="filter__title"
-              @click="switchItemsVisibility"
-              v-click-outside="externalClick"
-            >
+            <p class="filter__title" @click="switchItemsVisibility" v-click-outside="externalClick">
               Фильтровать
-              <svg
-                :class="{ reveal: show, closed: !show }"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L7 7L13 1"
-                  stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+              <svg :class="{ reveal: show, closed: !show }" width="14" height="8" viewBox="0 0 14 8" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </p>
             <div v-show="show" class="filter__items">
@@ -195,14 +176,10 @@ export default {
         </div>
       </div>
       <div class="applications__items">
-        <div
-          v-for="item in filteredApplications"
-          :key="item.id"
-          class="applications__item"
-          @click="openReference(item.id)"
-        >
+        <div v-for="item in filteredApplications" :key="item.id" class="applications__item"
+          @click="openReference(item.id)">
           <div class="applications__item-id">
-              {{ item.id }}
+            {{ item.id }}
           </div>
           <div class="applications__item-wrapper">
             <div class="applications__item-date">
@@ -221,6 +198,7 @@ export default {
 .applications {
   display: flex;
   padding-bottom: 50px;
+
   &__block {
     display: flex;
     flex-direction: column;
@@ -234,7 +212,14 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+
+    @media screen and (max-width:650px) {
+      flex-direction: column;
+      // text-align: center;
+
+    }
   }
+
   &__title {
     width: 100%;
     text-align: left;
@@ -243,6 +228,19 @@ export default {
     font-size: 34px;
     line-height: 45px;
     color: #0c0b0b;
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:650px) {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+    }
   }
 
   &__items {
@@ -251,7 +249,9 @@ export default {
     align-items: center;
     margin-top: 75px;
     width: 100%;
+
   }
+
   &__item {
     cursor: pointer;
     max-width: 784px;
@@ -261,6 +261,11 @@ export default {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
     padding: 14px 23px 30px 52px;
     margin-bottom: 47px;
+
+    @media screen and (max-width:500px) {
+      padding: 20px;
+    }
+
     &-date {
       font-style: normal;
       font-weight: 400;
@@ -270,7 +275,17 @@ export default {
       margin-right: auto;
       text-align: left;
       white-space: nowrap;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-category {
       text-align: center;
       font-style: normal;
@@ -281,7 +296,17 @@ export default {
       max-width: 100%;
       width: 100%;
       flex-grow: 1;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-status {
       min-width: 100px;
       font-style: normal;
@@ -291,7 +316,17 @@ export default {
       color: #939393;
       margin-left: auto;
       text-align: right;
+
+      @media screen and (max-width:1200px) {
+        font-size: 18px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
+
     &-id {
       text-align: center;
       margin-bottom: 14px;
@@ -301,17 +336,25 @@ export default {
       line-height: 27px;
       color: #0c0b0b;
     }
+
     &-wrapper {
       display: flex;
       flex-direction: row;
       justify-content: center;
       gap: 20px;
+
+      @media screen and (max-width:500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     &:last-of-type {
       margin-bottom: 0;
     }
   }
+
   &__button {
     width: 295px;
     height: 59px;
@@ -330,6 +373,7 @@ export default {
     border-radius: 8px;
     cursor: pointer;
   }
+
   &__student {
     width: 100%;
     display: flex;
@@ -344,9 +388,15 @@ export default {
     width: 100%;
   }
 }
+
 .search {
   display: flex;
   align-items: center;
+
+  @media screen and (max-width:500px) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 }
 
 .filter {
@@ -356,6 +406,11 @@ export default {
   margin-right: 44px;
 
   position: relative;
+
+  @media screen and (max-width:500px) {
+    margin-right: 0;
+    margin-top: 20px;
+  }
 
   &__title {
     cursor: pointer;
@@ -371,11 +426,13 @@ export default {
 
     display: flex;
     align-items: center;
+
   }
 
   svg {
     margin-left: 3px;
   }
+
   &__items {
     display: flex;
     flex-direction: column;
@@ -389,20 +446,25 @@ export default {
     position: absolute;
     top: 100%;
     left: 8%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
   }
+
   &__item {
     cursor: pointer;
     margin-bottom: 6px;
+
     &:last-of-type {
       margin-top: 6px;
       margin-bottom: 0;
     }
   }
 }
+
 .line {
   width: 100%;
   border-bottom: 1px solid black;
 }
+
 .selector {
   display: flex;
   flex-direction: column;
@@ -445,6 +507,7 @@ export default {
     border-bottom-right-radius: 8px;
     padding: 23px 28px 17px;
   }
+
   &__item {
     cursor: pointer;
     display: flex;
@@ -465,29 +528,36 @@ export default {
     }
   }
 }
+
 .reveal {
   transform: rotate(-180deg);
   animation-name: reveal;
   animation-duration: 0.4s;
+
   @keyframes reveal {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(-180deg);
     }
   }
+
   path {
     fill: gray;
   }
 }
+
 .closed {
   animation-name: closed;
   animation-duration: 0.4s;
+
   @keyframes closed {
     0% {
       transform: rotate(180deg);
     }
+
     100% {
       transform: rotate(0deg);
     }
@@ -529,6 +599,7 @@ export default {
       line-height: 25px;
     }
   }
+
   &__commentaries {
     display: flex;
     flex-direction: column;
@@ -544,6 +615,7 @@ export default {
 
       color: #060606;
     }
+
     textarea {
       margin-top: 16px;
       width: 100%;
@@ -553,6 +625,7 @@ export default {
       outline: unset;
     }
   }
+
   &__button {
     width: 100%;
 
@@ -569,6 +642,7 @@ export default {
     text-align: center;
   }
 }
+
 .popup {
   display: flex;
   flex-direction: column;
