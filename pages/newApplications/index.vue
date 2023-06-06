@@ -18,6 +18,7 @@ export default {
         { title: "Год окончания", backendKey: "yearGrad" },
       ],
       applications: [],
+      filteredApplications: [],
       applicationTypes: [
         { title: "Транскрипт" },
         { title: "Справка с места учебы" },
@@ -48,7 +49,10 @@ export default {
       .catch((err) => console.error(err));
     await this.$axios
       .get(`/api/doc/all`, config)
-      .then((res) => this.applications = [...res.data])
+      .then((res) => {
+        this.applications = [...res.data];
+        this.filteredApplications = this.applications;
+      })
       .catch((err) => {console.error(err)});
   },
   methods: {
@@ -65,6 +69,15 @@ export default {
         };
       });
     },
+    searchApplications(val) {
+      if (val.trim()) {
+        this.filteredApplications = this.applications.filter(application => {
+          return String(application.category).includes(val) || String(application.id).includes(val)
+        });
+      } else {
+        this.filteredApplications = this.applications;
+      }
+    },
     switchItemsVisibility() {
       this.show = !this.show;
     },
@@ -76,7 +89,13 @@ export default {
       });
     },
     searchApplications(val) {
-      // TODO: серч по айди заявки
+      if (val.trim()) {
+        this.filteredApplications = this.applications.filter(application => {
+          return String(application.category).includes(val) || String(application.id).includes(val)
+        });
+      } else {
+        this.filteredApplications = this.applications;
+      }
     },
     selectApplicationType(v, i) {
       this.categoryCode = v.code;
@@ -177,21 +196,21 @@ export default {
       </div>
       <div class="applications__items">
         <div
-          v-for="item in applications"
+          v-for="item in filteredApplications"
           :key="item.id"
           class="applications__item"
           @click="openReference(item.id)"
         >
-          <p>
-            {{ item.createdAt.split('T')[0] }}
-          </p>
-          <div>
-            <span>
+          <div class="applications__item-id">
               {{ item.id }}
-            </span>
-            <h6>{{ item.category }}</h6>
           </div>
-          <span>{{ item.status }}</span>
+          <div class="applications__item-wrapper">
+            <div class="applications__item-date">
+              {{ item.createdAt.split('T')[0] }}
+            </div>
+            <h6 class="applications__item-category">{{ item.category }}</h6>
+            <div class="applications__item-status">{{ item.status }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -240,50 +259,53 @@ export default {
     background: white;
     border-radius: 8px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
     padding: 14px 23px 30px 52px;
-
     margin-bottom: 47px;
-
-    p {
+    &-date {
       font-style: normal;
       font-weight: 400;
       font-size: 24px;
       line-height: 32px;
       color: #0c0b0b;
+      margin-right: auto;
+      text-align: left;
+      white-space: nowrap;
     }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      span {
-        margin-bottom: 14px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 27px;
-        color: #0c0b0b;
-      }
-      h6 {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 32px;
-        color: #0c0b0b;
-      }
+    &-category {
+      text-align: center;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: #0c0b0b;
+      max-width: 100%;
+      width: 100%;
+      flex-grow: 1;
     }
-
-    span {
+    &-status {
+      min-width: 100px;
       font-style: normal;
       font-weight: 400;
       font-size: 20px;
       line-height: 27px;
       color: #939393;
+      margin-left: auto;
+      text-align: right;
+    }
+    &-id {
+      text-align: center;
+      margin-bottom: 14px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 27px;
+      color: #0c0b0b;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 20px;
     }
 
     &:last-of-type {
