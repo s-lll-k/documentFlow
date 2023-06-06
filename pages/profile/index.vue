@@ -16,9 +16,9 @@
         </label>
       </div>
     </div>
-    <button v-if="user?.roles[0]?.name === 'ROLE_ADMIN'" class="profile__button" @click="profileChanges(edit)">
+    <!-- <button v-if="user?.roles[0]?.name === 'ROLE_ADMIN'" class="profile__button" @click="profileChanges(edit)">
       {{ !edit ? "Редактировать данные" : "Сохранить данные" }}
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -41,10 +41,11 @@ export default {
         { title: "Год окончания", backendKey: "yearGrad" },
       ],
       managerProfileInfo: [
-        { title: "Имя", backendKey: "firstname" },
-        { title: "Фамилия", backendKey: "lastname" },
+        { title: "ФИО", backendKey: "headFullName" },
         { title: "Номер телефона", backendKey: "phoneNumber" },
         { title: "E-mail", backendKey: "email" },
+        { title: "Группа", backendKey: "group" },
+        { title: "Позиция", backendKey: "position" }
       ]
     };
   },
