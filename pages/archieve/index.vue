@@ -161,7 +161,7 @@ export default {
     margin-bottom: 47px;
 
     @media screen and (max-width:500px) {
-      padding: 20px;
+      padding:20px;
     }
 
     &-date {

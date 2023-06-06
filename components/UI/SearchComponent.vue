@@ -43,6 +43,12 @@ export default {
 <style lang="scss" scoped>
 .search-label {
     position: relative;
+    @media screen and (max-width:650px){
+        width: 100%;
+        input{
+            width: 100% !important;
+        }
+    }
 }
 .search-icon {
     position: absolute;

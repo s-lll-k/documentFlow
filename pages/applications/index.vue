@@ -252,6 +252,12 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+
+    @media screen and (max-width:650px) {
+      flex-direction: column;
+      // text-align: center;
+
+    }
   }
 
   &__title {
@@ -260,16 +266,20 @@ export default {
     font-style: normal;
     font-weight: 700;
     font-size: 34px;
-    // line-height: 45px;
+    line-height: 45px;
     color: #0c0b0b;
 
     @media screen and (max-width:1200px) {
       font-size: 30px;
     }
 
+    @media screen and (max-width:650px) {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
     @media screen and (max-width:500px) {
       font-size: 28px;
-      text-align: center;
     }
   }
 
@@ -279,6 +289,7 @@ export default {
     align-items: center;
     margin-top: 75px;
     width: 100%;
+
   }
 
   &__item {
@@ -291,6 +302,10 @@ export default {
     padding: 14px 23px 30px 52px;
     margin-bottom: 47px;
 
+    @media screen and (max-width:500px) {
+      padding: 20px;
+    }
+
     &-date {
       font-style: normal;
       font-weight: 400;
@@ -300,6 +315,15 @@ export default {
       margin-right: auto;
       text-align: left;
       white-space: nowrap;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
 
     &-category {
@@ -312,6 +336,15 @@ export default {
       max-width: 100%;
       width: 100%;
       flex-grow: 1;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
 
     &-status {
@@ -323,6 +356,15 @@ export default {
       color: #939393;
       margin-left: auto;
       text-align: right;
+
+      @media screen and (max-width:1200px) {
+        font-size: 18px;
+      }
+
+      @media screen and (max-width:500px) {
+        // text-align: center;
+        margin: auto;
+      }
     }
 
     &-id {
@@ -340,6 +382,12 @@ export default {
       flex-direction: row;
       justify-content: center;
       gap: 20px;
+
+      @media screen and (max-width:500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     &:last-of-type {
@@ -348,8 +396,7 @@ export default {
   }
 
   &__button {
-    max-width: 295px;
-    width: 100%;
+    width: 295px;
     height: 59px;
 
     display: flex;
@@ -365,16 +412,6 @@ export default {
     border: 1.5px solid #0c0b0b;
     border-radius: 8px;
     cursor: pointer;
-
-    @media screen and (max-width:1200px) {
-      font-size: 20px;
-    }
-
-    @media screen and (max-width:500px) {
-      font-size: 18px;
-      height: 46px;
-
-    }
   }
 
   &__student {
@@ -395,6 +432,11 @@ export default {
 .search {
   display: flex;
   align-items: center;
+
+  @media screen and (max-width:500px) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 }
 
 .filter {
@@ -404,6 +446,11 @@ export default {
   margin-right: 44px;
 
   position: relative;
+
+  @media screen and (max-width:500px) {
+    margin-right: 0;
+    margin-top: 20px;
+  }
 
   &__title {
     cursor: pointer;
@@ -419,6 +466,7 @@ export default {
 
     display: flex;
     align-items: center;
+
   }
 
   svg {
@@ -438,6 +486,7 @@ export default {
     position: absolute;
     top: 100%;
     left: 8%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.32);
   }
 
   &__item {
@@ -465,18 +514,9 @@ export default {
   border-radius: 8px;
   margin: 64px 0 78px;
 
-  @media screen and (max-width:1200px) {
-    margin: 44px 0 58px;
-  }
-
-  @media screen and (max-width:500px) {
-    margin: 24px 0 38px;
-  }
-
   &__selected {
     cursor: pointer;
-    max-width: 433px;
-    width: 100%;
+    width: 433px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -492,16 +532,6 @@ export default {
     line-height: 40px;
     color: #0c0b0b;
 
-    @media screen and (max-width:1200px) {
-      font-size: 24px;
-
-    }
-
-    @media screen and (max-width:500px) {
-      font-size: 20px;
-      padding: 6px 0;
-    }
-
     svg {
       margin-left: 8px;
     }
@@ -516,7 +546,6 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 23px 28px 17px;
-
   }
 
   &__item {
@@ -533,16 +562,6 @@ export default {
     font-size: 30px;
     line-height: 40px;
     color: #0c0b0b;
-
-    @media screen and (max-width:1200px) {
-      font-size: 24px;
-    }
-
-    @media screen and (max-width:500px) {
-      font-size: 18px;
-      padding: 6px 0;
-
-    }
 
     &:last-of-type {
       border-bottom: unset;
@@ -663,6 +682,7 @@ export default {
     text-align: center;
   }
 }
+
 
 .popup {
   display: flex;
