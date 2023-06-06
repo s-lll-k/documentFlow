@@ -22,6 +22,7 @@ export default {
         },
       },
       news: [],
+      filteredNews: []
     };
   },
   async created() {
@@ -33,10 +34,21 @@ export default {
       })
       .then((res) => {
         this.news = res.data;
-        console.log(res.data);
+        this.filteredNews = this.news;
       })
       .catch((err) => console.error(err));
   },
+  methods: {
+    searchNews(val) {
+      if (val.trim()) {
+        this.filteredNews = this.news.filter(n => {
+          return String(n.theme).includes(val) || String(n.text).includes(val)
+        });
+      } else {
+        this.filteredNews = this.news;
+      }
+    },
+  }
 };
 </script>
 
@@ -55,9 +67,12 @@ export default {
       <div class="swiper-button-next next-btn"></div>
     </div>
     <div class="news">
-      <h1 class="news__title">Новости</h1>
+      <div class="news__wrapper">
+        <h1 class="news__title">Новости</h1>
+        <SearchComponent class="news__search" @searchItems="searchNews" />
+      </div>
       <div class="news__items">
-        <div class="news__item" v-for="(item, index) in news" :key="index">
+        <div class="news__item" v-for="(item, index) in filteredNews" :key="index">
           <h3>{{ item.theme }}</h3>
           <div class="news__item-wrapper">
             <span>{{ moment(item.createdAt).locale("ru").format("L") }}</span>
@@ -98,6 +113,14 @@ export default {
 
 .news {
   padding-bottom: 50px;
+  &__search {
+    width: 250px;
+  }
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   &__title {
     font-style: normal;
     font-weight: 700;
