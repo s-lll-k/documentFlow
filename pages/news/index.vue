@@ -26,11 +26,6 @@ export default {
           768: {
             slidesPerView: 2,
             // spaceBetween: 30
-          },
-          // when window width is >= 640px
-          1200: {
-            slidesPerView: 4,
-            // spaceBetween: 40
           }
         },
         navigation: {
