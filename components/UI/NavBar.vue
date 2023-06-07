@@ -57,7 +57,7 @@ export default {
         },
         {
           title: "Заявки",
-          icon: require("@/assets/images/applications.png"),
+          icon: require("@/assets/images/default-applications.png"),
           url: "/applications",
         },
         {
