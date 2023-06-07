@@ -212,7 +212,7 @@ export default {
         </button>
       </div>
       <div v-if="createApplication" class="profile">
-        <h2>{{ selectedApplicationType }}</h2>
+        <h2 class="profile__title">{{ selectedApplicationType }}</h2>
         <div class="profile__items">
           <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
             <p>
@@ -645,27 +645,60 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    // line-height: 45px;
+    color: #0c0b0b;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
+  }
 
   &__items {
-    width: 100%;
     display: grid;
     grid-template-columns: 2fr 1fr;
     justify-content: space-between;
     grid-gap: 20px;
 
-    margin-top: 68px;
+    margin-top: 120px;
+
+    @media screen and (max-width:501px) {
+      margin-top: 50px;
+      // flex-direction: column;
+      // align-items: flex-start;
+      grid-template-columns: 1fr;
+    }
+
   }
 
   &__item {
     display: flex;
     align-items: center;
 
+
     p {
       font-style: normal;
       font-weight: 700;
       font-size: 24px;
-      line-height: 32px;
+      // line-height: 32px;
       color: #0c0b0b;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
 
     span {
@@ -673,9 +706,16 @@ export default {
       font-size: 21px;
       margin-left: 8px;
       line-height: 25px;
+
+      @media screen and (max-width:1200px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
   }
-
   &__commentaries {
     display: flex;
     flex-direction: column;

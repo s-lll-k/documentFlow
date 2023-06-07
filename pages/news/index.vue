@@ -123,10 +123,11 @@ export default {
   <div>
     <div class="navigation">
       <div class="swiper-button-prev prev-btn"></div>
-      <swiper ref="swiper" :options="swiperOptions" class="swiper" v-if="$store.getters.GET_USER.roles[0] === 'ROLE_USER'">
+      <swiper ref="swiper" :options="swiperOptions" class="swiper"
+        v-if="$store.getters.GET_USER.roles[0] === 'ROLE_USER'">
         <swiper-slide v-for="(item, index) in studentSlides" :key="index" class="swiper-slide">
           <div class="swiper-item" @click="goTo(item.url, item.type)">
-            <img :src="item.img" />
+            <img src="@/assets/images/universities.png" />
             <p>{{ item.name }}</p>
           </div>
         </swiper-slide>
