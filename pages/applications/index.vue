@@ -102,11 +102,13 @@ export default {
     selectApplicationType(v, i) {
       this.categoryCode = v.code;
       this.selectedApplicationType = v.title;
+      this.show = false;
+      this.showType = false;
     },
     openApplicationTypes() {
       this.showType = !this.showType;
     },
-    externalClick() {
+    externalClick(e) {
       this.show = false;
       this.showType = false;
     },
@@ -196,8 +198,8 @@ export default {
     <div v-else class="applications__student">
       <div v-if="!createApplication" class="applications__step1">
         <h2 class="applications__title">{{translations.createApp}}</h2>
-        <div class="selector">
-          <div class="selector__selected" @click="openApplicationTypes" v-click-outside="externalClick">
+        <div class="selector" v-click-outside="externalClick">
+          <div class="selector__selected" @click="openApplicationTypes">
             {{ selectedApplicationType ?? "Тип заявки" }}
             <svg :class="{ reveal: showType, closed: !showType }" width="14" height="8" viewBox="0 0 14 8" fill="none"
               xmlns="http://www.w3.org/2000/svg">
