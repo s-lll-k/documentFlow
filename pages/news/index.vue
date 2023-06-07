@@ -122,7 +122,11 @@ export default {
 <template>
   <div>
     <div class="navigation">
-      <div class="swiper-button-prev prev-btn"></div>
+      <div class="swiper-button-prev prev-btn"><svg width="8" height="14" viewBox="0 0 8 14" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 13L1 7L7 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
       <swiper ref="swiper" :options="swiperOptions" class="swiper"
         v-if="$store.getters.GET_USER.roles[0] === 'ROLE_USER'">
         <swiper-slide v-for="(item, index) in studentSlides" :key="index" class="swiper-slide">
@@ -140,7 +144,11 @@ export default {
           </div>
         </swiper-slide>
       </swiper>
-      <div class="swiper-button-next next-btn"></div>
+      <div class="swiper-button-next next-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
     </div>
     <div class="news">
       <div class="news__wrapper">
@@ -299,11 +307,16 @@ export default {
   .next-btn,
   .swiper-button-prev,
   .swiper-button-next {
+    &::after {
+      display: none !important;
+    }
+
+    // font-size: 0;
     position: static;
 
     background: white;
     border-radius: 50%;
-    width: 42px;
+    min-width: 42px;
     height: 41px;
   }
 
@@ -313,6 +326,14 @@ export default {
 
   .swiper-button-next {
     margin-left: 30px;
+  }
+
+  .swiper-item {
+    img {
+      @media screen and (max-width:500px) {
+        height: 45px;
+      }
+    }
   }
 
   .swiper-button-next:after,
@@ -343,5 +364,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>
