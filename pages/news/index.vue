@@ -40,42 +40,42 @@ export default {
         {
           url: '/newApplications',
           name: 'Новые заявки',
-          img: '_nuxt/assets/images/universities.png'
+          img: '/uni.png',
         },
         {
           url: '/applications',
           name: 'Заявки',
-          img: '_nuxt/assets/images/universities.png'
+          img: '/uni.png',
         },
         {
           url: '/archieve',
           name: 'Архив заявок',
-          img: '_nuxt/assets/images/universities.png'
+          img: '/uni.png',
         }
       ],
       studentSlides: [
         {
           url: '/applications',
           name: 'Справка с места учебы',
-          img: '_nuxt/assets/images/universities.png',
+          img: '/uni.png',
           type: 'Справка с места учебы'
         },
         {
           url: '/applications',
           name: 'Транскрипт',
-          img: '_nuxt/assets/images/transcript.png',
+          img: '/image28.png',
           type: 'Транскрипт'
         },
         {
           url: '/applications',
           name: 'Справка о наличии гранта',
-          img: '_nuxt/assets/images/universities.png',
+          img: '/uni.png',
           type: 'Справка о наличии гранта'
         },
         {
           url: '/applications',
           name: 'Справка о зачислении',
-          img: '_nuxt/assets/images/universities.png',
+          img: '/uni.png',
           type: 'Справка о зачислении'
         }
       ],
