@@ -1,5 +1,8 @@
 <script>
+import { mapState } from 'vuex';
+import LanguageSelector from '../../components/Language/LanguageSelector.vue';
 export default {
+  components: { LanguageSelector },
   data() {
     return {
       show: false,
@@ -10,8 +13,11 @@ export default {
       description: "",
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
-
+    this.$store.dispatch('loadTranslations');
   },
   methods: {
     externalClick() {
@@ -42,65 +48,45 @@ export default {
 </script>
 
 <template>
-  <div>
-    <!-- <nuxt-link class="твой класс" :to="'/faq'">
-                                                                внутрянка как и у обычных блоков
-                                                              </nuxt-link> -->
-    <div class="settings">
-      <h1 class="settings__title">
-        Настройки
-      </h1>
+  <div class="settings">
+    <h1 class="settings__title">
+      {{ translations.settingsLabel }}
+    </h1>
 
-      <div class="settings__items">
+    <div class="settings__items">
         <nuxt-link class="settings__item" :to="'/faq'">
           FAQ
         </nuxt-link>
-        <div class="settings__item " @click="switchItemsVisibility" v-click-outside="externalClick">
-
-          Фильтровать
-          <svg :class="{ reveal: show, closed: !show }" width="14" height="8" viewBox="0 0 14 8" fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <div v-show="show" class="filter__items">
-            <div class="filter__item">
-              По новым
-            </div>
-            <div class="line"></div>
-            <div class="filter__item">
-              По старым
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="settings__socials">
-        <h2 class="settings__socials-title">Контакты</h2>
-        <ul class="settings__socials-block">
-          <li class="settings__socials-link"><a href="reception@iitu.edu.kz" target="_blank"
-              class="settings__socials-link">
-              <img src="../../assets/images/gmail.svg" alt="gmail" class="settings__socials-img">
-            </a></li>
-          <li class="settings__socials-link"><a href="https://www.instagram.com/iitu_kz/" target="_blank"
-              class="settings__socials-link">
-              <img src="../../assets/images/inst.svg" alt="inst" class="settings__socials-img">
-            </a></li>
-          <li class="settings__socials-link"><a href="https://vk.com/iitu_edu_kz" target="_blank"
-              class="settings__socials-link">
-              <img src="../../assets/images/vkontakte.svg" alt="vkontakte" class="settings__socials-img">
-            </a></li>
-          <li class="settings__socials-link"><a href="https://t.me/iitunews" target="_blank"
-              class="settings__socials-link">
-              <img src="../../assets/images/telegram.svg" alt="telegram" class="settings__socials-img">
-            </a></li>
-        </ul>
-      </div>
+        <language-selector class="lang-switcher"></language-selector>
+    </div>
+    <div class="settings__socials">
+      <h2 class="settings__socials-title">Контакты</h2>
+      <ul class="settings__socials-block">
+        <li class="settings__socials-link"><a href="reception@iitu.edu.kz" target="_blank"
+            class="settings__socials-link">
+            <img src="../../assets/images/gmail.svg" alt="gmail" class="settings__socials-img">
+          </a></li>
+        <li class="settings__socials-link"><a href="https://www.instagram.com/iitu_kz/" target="_blank"
+            class="settings__socials-link">
+            <img src="../../assets/images/inst.svg" alt="inst" class="settings__socials-img">
+          </a></li>
+        <li class="settings__socials-link"><a href="https://vk.com/iitu_edu_kz" target="_blank"
+            class="settings__socials-link">
+            <img src="../../assets/images/vkontakte.svg" alt="vkontakte" class="settings__socials-img">
+          </a></li>
+        <li class="settings__socials-link"><a href="https://t.me/iitunews" target="_blank"
+            class="settings__socials-link">
+            <img src="../../assets/images/telegram.svg" alt="telegram" class="settings__socials-img">
+          </a></li>
+      </ul>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.lang-switcher {
+  position: static;
+}
 .settings {
   display: flex;
   flex-direction: column;

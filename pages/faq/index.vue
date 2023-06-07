@@ -27,35 +27,35 @@ export default {
   methods: {
     toggleTab(index) {
       this.activeTab = index;
-
     },
     getHeight(index) {
       if (this.$refs['elem' + index]) {
         return this.$refs['elem' + index][0].scrollHeight;
       }
       return 0;
-    }, updateHeights() {
+    }, 
+    updateHeights() {
       for (let index = 0; index < this.faqItems.length; index++) {
         const height = this.getHeight(index);
         const elem = this.$refs['elem' + index][0];
-        if (elem && elem.style.maxHeight !== height + 'px' && this.activeTab === index) {
+        if (elem && elem.classList.contains('active') && this.activeTab === index) {
           elem.style.maxHeight = height + 'px';
+        } else {
+          elem.style.maxHeight = '0px';
         }
       }
     }
   },
-  mounted() {
+  created() {
     this.$nextTick(() => {
-      // Обновите высоту элементов после полной отрисовки
       this.updateHeights();
     });
   },
-  // updated() {
-  //   this.$nextTick(() => {
-  //     // Обновите высоту элементов после обновления
-  //     this.updateHeights();
-  //   });
-  // },
+  updated() {
+    this.$nextTick(() => {
+      this.updateHeights();
+    });
+  },
 
 };
 </script>
@@ -73,12 +73,11 @@ export default {
                 @click="toggleTab(index)">
                 {{ item.question }}
               </button>
-              <div v-show="activeTab === index" class="faq__content" :ref="'elem' + index"
+              <div :class="[{ active: activeTab === index }, 'faq__content']" :ref="'elem' + index"
                 :style="{ maxHeight: activeTab === index ? getHeight(index) + 'px' : '0px' }">
                 <p>
                   {{ item.answer }}
                 </p>
-
               </div>
             </div>
           </div>
@@ -150,8 +149,7 @@ export default {
     color: #0C0B0B;
     transition: 0.5s all;
     max-height: 0;
-    display: block !important;
-
+    display: block;
     p {
       padding: 31px;
     }

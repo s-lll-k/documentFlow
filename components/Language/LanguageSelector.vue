@@ -1,14 +1,18 @@
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
     data() {
         return {
-            languages: ["RU", "KZ", "EN"],
-            selectedLanguage: 0,
+            languages: ['ru', 'kz', 'en']
         };
     },
+    computed: {
+        ...mapState(['selectedLanguage']),
+    },
     methods: {
-        selectLanguage(i) {
-            this.selectedLanguage = i;
+        selectLanguage(lang) {
+            this.$store.commit('SET_SELECTED_LANGUAGE', lang);
+            this.$store.dispatch('loadTranslations');
         },
     },
 };
@@ -16,8 +20,13 @@ export default {
 
 <template>
     <div class="languages">
-        <div v-for="(lang, index) in languages" :key="index" :class="{ active: selectedLanguage === index }"
-            @click="selectLanguage(index)" class="languages__item">
+        <div
+            v-for="(lang, index) in languages"
+            :key="index"
+            :class="{ active: lang === selectedLanguage }"
+            @click="selectLanguage(lang)"
+            class="languages__item"
+        >
             {{ lang }}
         </div>
     </div>
@@ -32,6 +41,7 @@ export default {
     top: 78px;
     right: 78px;
     gap: 0 10px;
+    text-transform: uppercase;
 
     @media screen and (max-width:1024px) {
         top: 20px;

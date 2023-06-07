@@ -8,7 +8,6 @@
     <div :class="['navbar', { 'opened': isNavbarOpen, 'closed': !isNavbarOpen }]">
       <div class="navbar__person person">
         <div class="person__content">
-          <img src="@/assets/images/user-icon.png" />
           {{ user.username }}
         </div>
       </div>
@@ -58,7 +57,7 @@ export default {
         },
         {
           title: "Заявки",
-          icon: require("@/assets/images/applications.png"),
+          icon: require("@/assets/images/default-applications.png"),
           url: "/applications",
         },
         {

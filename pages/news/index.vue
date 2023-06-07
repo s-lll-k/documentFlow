@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Swiper, { Navigation } from "swiper";
 Swiper.use([, Navigation]);
 import moment from "moment";
@@ -80,7 +81,12 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
+
     await this.$axios
       .get("api/news", {
         headers: {
@@ -137,7 +143,7 @@ export default {
     </div>
     <div class="news">
       <div class="news__wrapper">
-        <h1 class="news__title">Новости</h1>
+        <h1 class="news__title">{{ translations.newsLabel }}</h1>
         <SearchComponent class="news__search" @searchItems="searchNews" />
       </div>
       <div class="news__items">
