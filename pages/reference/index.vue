@@ -163,7 +163,7 @@ export default {
           Закрыть заявку
         </button>
       </div>
-      <h1>#{{ referenceInfo?.id }}</h1>
+      <h1 class="aapplications__title">#{{ referenceInfo?.id }}</h1>
       <h2>{{ referenceInfo?.category }}</h2>
       <div class="profile__items" v-if="referenceInfo">
         <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
@@ -276,13 +276,23 @@ h1 {
   }
 
   &__title {
-    width: 100%;
-    text-align: left;
     font-style: normal;
     font-weight: 700;
     font-size: 34px;
-    line-height: 45px;
+    // line-height: 45px;
     color: #0c0b0b;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
+
+    
   }
 
   &__items {
