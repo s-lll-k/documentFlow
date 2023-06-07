@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import moment from "moment";
 export default {
   data() {
@@ -16,7 +17,11 @@ export default {
       selectedApplicationType: null,
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
     // let apiEndpoint = "/api/doc?status=CANCELED";
     let apiEndpoint = "/api/doc";
 
@@ -83,7 +88,7 @@ export default {
   <div class="applications">
     <div class="applications__block">
       <div class="applications__filter">
-        <h2 class="applications__title">Архив заявок</h2>
+        <h2 class="applications__title">{{ translations.applicationsArchiveLabel }}</h2>
       </div>
       <div class="applications__items">
         <div v-for="item in archieve" :key="item.id" class="applications__item" @click="openReference(item.id)">

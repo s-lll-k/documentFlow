@@ -1,19 +1,20 @@
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
       loading: false,
       profileInfo: [
-        { title: "IIТ студента", backendKey: "studIIN" },
-        { title: "ID студента", backendKey: "userId" },
-        { title: "Имя", backendKey: "firstname" },
-        { title: "Фамилия", backendKey: "lastname" },
-        { title: "Факультет", backendKey: "faculty" },
-        { title: "Форма обучения", backendKey: "educationType" },
-        { title: "Грант", backendKey: "studGrant" },
-        { title: "Курс", backendKey: "cource" },
-        { title: "Год поступления", backendKey: "yearAdm" },
-        { title: "Год окончания", backendKey: "yearGrad" },
+        { title: "studentIdTitle", backendKey: "studIIN" },
+        { title: "studentIdLabel", backendKey: "userId" },
+        { title: "nameLabel", backendKey: "firstname" },
+        { title: "surnameLabel", backendKey: "lastname" },
+        { title: "facultyLabel", backendKey: "faculty" },
+        { title: "studyFormLabel", backendKey: "educationType" },
+        { title: "grantLabel", backendKey: "studGrant" },
+        { title: "courseLabel", backendKey: "cource" },
+        { title: "yearOfAdmissionLabel", backendKey: "yearAdm" },
+        { title: "yearOfGraduationLabel", backendKey: "yearGrad" },
       ],
       referenceInfo: null,
       show: false,
@@ -24,7 +25,11 @@ export default {
       description: "",
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
     this.getApplicationTypes();
     const config = {
       params: {
@@ -151,16 +156,16 @@ export default {
           </svg>
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('REJECTED')">
-          Отправить на доработку
+          {{translations.sendForRevisionButton}}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
-          Отклонить
+          {{translations.rejectButton}}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'Создано'" @click="editRef('IN_PROGRESS')">
-          Принять в работу
+          {{translations.acceptForProcessingButton}}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CLOSED')">
-          Закрыть заявку
+          {{translations.closeApplicationButton}}
         </button>
       </div>
       <h1>#{{ referenceInfo?.id }}</h1>
@@ -173,10 +178,10 @@ export default {
         </div>
       </div>
       <div class="profile__commentaries">
-        <h3>Комментарии</h3>
+        <h3>{{translations.commentsLabel}}</h3>
         <div class="profile__comment">
           <span v-if="!referenceInfo?.description.trim()">
-            Комментарии отсутствуют
+            {{translations.noCommentsLabel}}
           </span>
           <span v-else>
             {{ referenceInfo.description }}
@@ -190,15 +195,15 @@ export default {
         <div class="profile__items">
           <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
             <p>
-              {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
+              {{ translations[item.title] }}:<span>{{ referenceInfo[item.backendKey] }}</span>
             </p>
           </div>
         </div>
         <div class="profile__commentaries">
-          <h3>Комментарии</h3>
+          <h3>{{translations.commentsLabel}}</h3>
           <div class="profile__comment">
             <span v-if="!referenceInfo.description.trim()">
-              Комментарии отсутствуют
+              {{translations.noCommentsLabel}}
             </span>
             <span v-else>
               {{ referenceInfo.description }}

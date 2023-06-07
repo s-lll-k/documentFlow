@@ -1,11 +1,11 @@
 <template>
   <div class="profile">
-    <h1 class="profile__title">Информация о {{ $store.getters.GET_USER.userRole === 1 ? "менеджере" : "студенте" }}</h1>
+    <h1 class="profile__title">{{ translations.infoAbout }} {{ $store.getters.GET_USER.userRole === 1 ? "менеджере" : "студенте" }}</h1>
     <div class="profile__items">
       <div class="profile__item"
         v-for="(item, index) in $store.getters.GET_USER.userRole === 1 ? managerProfileInfo : profileInfo" :key="index">
         <p v-if="!edit">
-          {{ item.title }}:<span>{{ user[item.backendKey] }}</span>
+          {{ translations[item.title] }}:<span>{{ user[item.backendKey] }}</span>
         </p>
         <label v-else>
           {{ item.title }}
@@ -20,33 +20,39 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
       user: {},
       edit: false,
       profileInfo: [
-        { title: "IIТ студента", backendKey: "studIIN" },
-        { title: "ID студента", backendKey: "userId" },
-        { title: "Имя", backendKey: "firstname" },
-        { title: "Фамилия", backendKey: "lastname" },
-        { title: "Факультет", backendKey: "faculty" },
-        { title: "Форма обучения", backendKey: "educationType" },
-        { title: "Грант", backendKey: "studGrant" },
-        { title: "Курс", backendKey: "cource" },
-        { title: "Год поступления", backendKey: "yearAdm" },
-        { title: "Год окончания", backendKey: "yearGrad" },
+        { title: "studentIdTitle", backendKey: "studIIN" },
+        { title: "studentIdLabel", backendKey: "userId" },
+        { title: "nameLabel", backendKey: "firstname" },
+        { title: "surnameLabel", backendKey: "lastname" },
+        { title: "facultyLabel", backendKey: "faculty" },
+        { title: "studyFormLabel", backendKey: "educationType" },
+        { title: "grantLabel", backendKey: "studGrant" },
+        { title: "courseLabel", backendKey: "cource" },
+        { title: "yearOfAdmissionLabel", backendKey: "yearAdm" },
+        { title: "yearOfGraduationLabel", backendKey: "yearGrad" },
       ],
       managerProfileInfo: [
-        { title: "ФИО", backendKey: "headFullName" },
-        { title: "Номер телефона", backendKey: "phoneNumber" },
-        { title: "E-mail", backendKey: "email" },
-        { title: "Группа", backendKey: "group" },
-        { title: "Позиция", backendKey: "position" }
+        { title: "fullName", backendKey: "headFullName" },
+        { title: "phoneNumberLabel", backendKey: "phoneNumber" },
+        { title: "emailLabel", backendKey: "email" },
+        { title: "groupLabel", backendKey: "group" },
+        { title: "positionLabel", backendKey: "position" }
       ]
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
+    
     await this.$axios
       .get(`/api/users/profile`, {
         headers: {

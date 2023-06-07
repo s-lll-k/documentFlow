@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Swiper, { Navigation } from "swiper";
 Swiper.use([, Navigation]);
 export default {
@@ -8,7 +9,11 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState(['translations']),
+  },
   created() {
+    this.$store.dispatch('loadTranslations');
     this.event = this.$store.state.calendarEvent;
 
     console.log('this.event', this.event)
@@ -34,11 +39,11 @@ export default {
       <div class="cards">
         <div class="cards__item event">
           <span>{{ event.eventsNum }}</span>
-          <span>Запланированные <br> события</span>
+          <span>{{ translations.plaining }} <br> {{ translations.events }}</span>
         </div>
         <div class="cards__item weekend">
           <span>{{ event.weekendsNum }}</span>
-          <span>Выходные</span>
+          <span>{{ translations.weekends }}</span>
         </div>
       </div>
       <div class="event">

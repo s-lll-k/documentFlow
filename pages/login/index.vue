@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 export default {
   layout: "login",
   data() {
@@ -9,6 +10,12 @@ export default {
       password: "12345678",
       loading: false,
     };
+  },
+  computed: {
+    ...mapState(['translations']),
+  },
+  created() {
+    this.$store.dispatch('loadTranslations');
   },
   methods: {
     changeStepStatus() {
@@ -60,10 +67,10 @@ export default {
         <LanguageSelector />
       </div>
       <h1 class="login__title" :class="{ title_margin: activeStep === 2 }">
-        Документооборот
+        {{ translations.documentWorkflowLabel }}
       </h1>
       <button v-if="activeStep === 1" @click="changeStepStatus" class="login__button">
-        Добро пожаловать!
+        {{ translations.welcomeLabel }}
       </button>
       <form v-else class="form" ref="form" @submit.prevent="handleSubmit">
         <label for="text">
@@ -72,7 +79,7 @@ export default {
         <label for="password">
           <input v-model="password" type="password" id="password" placeholder="Пароль" />
         </label>
-        <button type="submit" class="form__button">Войти</button>
+        <button type="submit" class="form__button">{{ translations.logInButton }}</button>
       </form>
     </main>
   </client-only>

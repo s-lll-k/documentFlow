@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Swiper, { Navigation } from "swiper";
 Swiper.use([, Navigation]);
 export default {
@@ -342,7 +343,11 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
     this.generateCalendar(this.selectedDates);
   },
   methods: {
@@ -433,7 +438,6 @@ export default {
       this.weekend = this.calendarMonths[0].weeks.flat().filter((day) => day?.highlighted && !day?.event);
     },
     updateCardsInfo() {
-      console.log('ОБНОВИТЬ!')
       const activeIndexOfSlide = this.$refs.swiper.swiperInstance.realIndex;
       this.events = this.calendarMonths[activeIndexOfSlide].weeks.flat().filter((day) => day?.highlighted && day?.event);
       this.weekend = this.calendarMonths[activeIndexOfSlide].weeks.flat().filter((day) => day?.highlighted && !day?.event);
@@ -460,11 +464,11 @@ export default {
     <div class="cards">
       <div class="cards__item event">
         <span>{{ events.length }}</span>
-        <span>Запланированные <br> события</span>
+        <span>{{ translations.plaining }} <br> {{ translations.events }}</span>
       </div>
       <div class="cards__item weekend">
         <span>{{ weekend.length }}</span>
-        <span>Выходные</span>
+        <span>{{ translations.weekends }}</span>
       </div>
     </div>
     <div class="navigation">

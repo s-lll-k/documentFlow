@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -6,16 +7,16 @@ export default {
       showPopup: false,
       loading: false,
       profileInfo: [
-        { title: "IIТ студента", backendKey: "studIIN" },
-        { title: "ID студента", backendKey: "userId" },
-        { title: "Имя", backendKey: "firstname" },
-        { title: "Фамилия", backendKey: "lastname" },
-        { title: "Факультет", backendKey: "faculty" },
-        { title: "Форма обучения", backendKey: "educationType" },
-        { title: "Грант", backendKey: "studGrant" },
-        { title: "Курс", backendKey: "cource" },
-        { title: "Год поступления", backendKey: "yearAdm" },
-        { title: "Год окончания", backendKey: "yearGrad" },
+        { title: "studentIdTitle", backendKey: "studIIN" },
+        { title: "studentIdLabel", backendKey: "userId" },
+        { title: "nameLabel", backendKey: "firstname" },
+        { title: "surnameLabel", backendKey: "lastname" },
+        { title: "facultyLabel", backendKey: "faculty" },
+        { title: "studyFormLabel", backendKey: "educationType" },
+        { title: "grantLabel", backendKey: "studGrant" },
+        { title: "courseLabel", backendKey: "cource" },
+        { title: "yearOfAdmissionLabel", backendKey: "yearAdm" },
+        { title: "yearOfGraduationLabel", backendKey: "yearGrad" },
       ],
       applications: [],
       filteredApplications: [],
@@ -33,7 +34,12 @@ export default {
       description: "",
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   async created() {
+    this.$store.dispatch('loadTranslations');
+
     this.getApplicationTypes();
     const config = {
       params: {
@@ -152,11 +158,11 @@ export default {
   <div class="applications">
     <div v-if="$store.getters.GET_USER.userRole === 1" class="applications__block">
       <div class="applications__filter">
-        <h2 class="applications__title">Новые заявки</h2>
+        <h2 class="applications__title">{{ translations.newApplication }}</h2>
         <div class="search">
           <div class="filter">
             <p class="filter__title" @click="switchItemsVisibility" v-click-outside="externalClick">
-              Фильтровать
+              {{ translations.filter }}
               <svg :class="{ reveal: show, closed: !show }" width="14" height="8" viewBox="0 0 14 8" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -164,11 +170,11 @@ export default {
             </p>
             <div v-show="show" class="filter__items">
               <div class="filter__item" @click="filterApplications('new')">
-                По новым
+                {{ translations.byNew }}
               </div>
               <div class="line"></div>
               <div class="filter__item" @click="filterApplications('old')">
-                По старым
+                {{ translations.byOld }}
               </div>
             </div>
           </div>
