@@ -34,10 +34,6 @@ export default {
   },
   async created() {
     this.$store.dispatch('loadTranslations');
-    if (this.$store.state.selectedTypeOfApplication) {
-      this.selectedApplicationType = this.$store.state.selectedTypeOfApplication
-      this.$store.dispatch('SET_TYPE', null);
-    }
     this.getApplicationTypes();
     const config = {
       headers: {
@@ -62,6 +58,13 @@ export default {
       .catch((err) => console.error(err));
   },
   methods: {
+    createFromNews () {
+      if (this.$store.state.selectedTypeOfApplication) {
+        this.selectedApplicationType = this.$store.state.selectedTypeOfApplication;
+        this.categoryCode = this.applicationTypes.find(item => item.title === this.selectedApplicationType).code;
+        this.$store.dispatch('SET_TYPE', null);
+      }
+    },
     async getApplicationTypes() {
       const types = await this.$axios.get(`api/doc_categories`, {
         headers: {
@@ -74,6 +77,7 @@ export default {
           code: item.code,
         };
       });
+      this.createFromNews();
     },
     switchItemsVisibility() {
       this.show = !this.show;
