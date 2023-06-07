@@ -127,7 +127,7 @@ export default {
         v-if="$store.getters.GET_USER.roles[0] === 'ROLE_USER'">
         <swiper-slide v-for="(item, index) in studentSlides" :key="index" class="swiper-slide">
           <div class="swiper-item" @click="goTo(item.url, item.type)">
-            <img src="@/assets/images/universities.png" />
+            <img :src="item.img" />
             <p>{{ item.name }}</p>
           </div>
         </swiper-slide>
