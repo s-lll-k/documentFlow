@@ -156,20 +156,20 @@ export default {
           </svg>
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('REJECTED')">
-          {{translations.sendForRevisionButton}}
+          {{ translations.sendForRevisionButton }}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CANCELED')">
-          {{translations.rejectButton}}
+          {{ translations.rejectButton }}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'Создано'" @click="editRef('IN_PROGRESS')">
-          {{translations.acceptForProcessingButton}}
+          {{ translations.acceptForProcessingButton }}
         </button>
         <button class="manager-tool__btn" v-if="referenceInfo?.status === 'В работе'" @click="editRef('CLOSED')">
-          {{translations.closeApplicationButton}}
+          {{ translations.closeApplicationButton }}
         </button>
       </div>
-      <h1>#{{ referenceInfo?.id }}</h1>
-      <h2>{{ referenceInfo?.category }}</h2>
+      <h1 class="applications__title">#{{ referenceInfo?.id }}</h1>
+      <h2 class="applications__title">{{ referenceInfo?.category }}</h2>
       <div class="profile__items" v-if="referenceInfo">
         <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
           <p>
@@ -178,10 +178,10 @@ export default {
         </div>
       </div>
       <div class="profile__commentaries">
-        <h3>{{translations.commentsLabel}}</h3>
+        <h3>{{ translations.commentsLabel }}</h3>
         <div class="profile__comment">
           <span v-if="!referenceInfo?.description.trim()">
-            {{translations.noCommentsLabel}}
+            {{ translations.noCommentsLabel }}
           </span>
           <span v-else>
             {{ referenceInfo.description }}
@@ -191,7 +191,7 @@ export default {
     </div>
     <div v-else class="applications__student">
       <div class="profile" v-if="referenceInfo">
-        <h2>{{ referenceInfo.category }} #{{ referenceInfo.id }}</h2>
+        <h2 class="profile__title">{{ referenceInfo.category }} #{{ referenceInfo.id }}</h2>
         <div class="profile__items">
           <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
             <p>
@@ -200,10 +200,10 @@ export default {
           </div>
         </div>
         <div class="profile__commentaries">
-          <h3>{{translations.commentsLabel}}</h3>
+          <h3>{{ translations.commentsLabel }}</h3>
           <div class="profile__comment">
             <span v-if="!referenceInfo.description.trim()">
-              {{translations.noCommentsLabel}}
+              {{ translations.noCommentsLabel }}
             </span>
             <span v-else>
               {{ referenceInfo.description }}
@@ -216,7 +216,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
 .go-back-button {
   width: 42px;
   height: 42px;
@@ -281,13 +280,23 @@ h1 {
   }
 
   &__title {
-    width: 100%;
-    text-align: left;
     font-style: normal;
     font-weight: 700;
     font-size: 34px;
-    line-height: 45px;
+    // line-height: 45px;
     color: #0c0b0b;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media screen and (max-width:1200px) {
+      font-size: 30px;
+    }
+
+    @media screen and (max-width:500px) {
+      font-size: 28px;
+      text-align: center;
+    }
+
+
   }
 
   &__items {
@@ -574,10 +583,40 @@ h1 {
       font-size: 28px;
       text-align: center;
     }
+
+    &__comment {
+      span {
+        font-family: 'Segoe UI';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 32px;
+
+        color: #060606;
+
+        @media screen and (max-width:1200px) {
+          font-size: 22px;
+        }
+
+        @media screen and (max-width:500px) {
+          font-size: 18px;
+          text-align: center;
+        }
+      }
+    }
   }
 
   &__commentaries {
     margin: 25px auto 0 0;
+
+    h3 {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+
+      color: #060606;
+    }
   }
 
 
