@@ -45,12 +45,12 @@ export default {
         {
           url: '/applications',
           name: 'Заявки',
-          img: '/uni.png',
+          img: '/image28.png',
         },
         {
           url: '/archieve',
           name: 'Архив заявок',
-          img: '/uni.png',
+          img: '/image31.png',
         }
       ],
       studentSlides: [
@@ -69,13 +69,13 @@ export default {
         {
           url: '/applications',
           name: 'Справка о наличии гранта',
-          img: '/uni.png',
+          img: '/image31.png',
           type: 'Справка о наличии гранта'
         },
         {
           url: '/applications',
           name: 'Справка о зачислении',
-          img: '/uni.png',
+          img: '/image15.png',
           type: 'Справка о зачислении'
         }
       ],
