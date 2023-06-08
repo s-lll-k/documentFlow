@@ -10,9 +10,9 @@ export default {
 <template>
     <div class="content">
         <div class="content__buttons">
-            <button class="content__btn" v-if="$store.getters.GET_USER.userRole === 2">
+            <nuxt-link class="content__btn" v-if="$store.getters.GET_USER.userRole === 2" :to="'/notifications'">
                 <img src="@/assets/images/applications/colocol.png" />
-            </button>
+            </nuxt-link>
             <nuxt-link class="content__btn" :to="'/settings'">
                 <img src="@/assets/images/applications/settings.png" />
             </nuxt-link>

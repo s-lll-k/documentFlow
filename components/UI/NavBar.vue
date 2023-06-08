@@ -17,7 +17,7 @@
           <nuxt-link :to="item.url"
             v-if="item?.role === $store.getters.GET_USER.userRole ? true : item?.role === undefined ? true : false">
             <img :src="item.icon" />
-            <span>{{ item.title }}</span>
+            <span>{{ translations[item.title] }}</span>
           </nuxt-link>
         </div>
         <a @click="logout" class="logout">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -45,40 +46,44 @@ export default {
       isNavbarOpen: false,
       navbarList: [
         {
-          title: "Новости",
+          title: "newsLabel",
           icon: require("@/assets/images/updates.png"),
           url: "/news",
         },
         {
-          title: "Новые заявки",
+          title: "newApplication",
           icon: require("@/assets/images/applications.png"),
           url: "/newApplications",
           role: 1 // only for manager
         },
         {
-          title: "Заявки",
+          title: "applicationsLabel",
           icon: require("@/assets/images/default-applications.png"),
           url: "/applications",
         },
         {
-          title: "Архив заявок",
+          title: "applicationsArchiveLabel",
           icon: require("@/assets/images/archive.png"),
           url: "/archieve",
         },
         {
-          title: "Профиль",
+          title: "profile",
           icon: require("@/assets/images/profile.png"),
           url: "/profile",
         },
         {
-          title: "Календарь",
+          title: "calendar",
           icon: require("@/assets/images/calendar.png"),
           url: "/calendar",
         }
       ],
     };
   },
+  computed: {
+    ...mapState(['translations']),
+  },
   created() {
+    this.$store.dispatch('loadTranslations');
     this.user = this.$store.getters.GET_USER;
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
