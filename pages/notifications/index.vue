@@ -84,7 +84,7 @@ export default {
         <h2 class="applications__title">{{ translations.notification }}</h2>
       </div>
       <div class="applications__items">
-        <div v-for="item in archieve" :key="item.id" class="applications__item" @click="openReference(item.id)">
+        <div v-for="item in archieve" :key="item.id" class="applications__item">
           <div class="applications__item-wrapper">
             <div class="applications__item-date">
               {{ item.createdTime.split(' ')[0] }}
@@ -145,7 +145,6 @@ export default {
   }
 
   &__item {
-    cursor: pointer;
     max-width: 784px;
     width: 100%;
     background: white;
