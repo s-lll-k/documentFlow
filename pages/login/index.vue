@@ -6,8 +6,8 @@ export default {
     return {
       user: {},
       activeStep: 1,
-      username: "27488", // admin
-      password: "12345678",
+      username: "",
+      password: "",
       loading: false,
     };
   },
