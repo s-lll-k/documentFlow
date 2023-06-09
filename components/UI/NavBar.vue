@@ -87,6 +87,9 @@ export default {
     this.user = this.$store.getters.GET_USER;
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
+    if (this.user.roles[0] === "ROLE_USER") {
+      this.navbarList[2].icon = require("@/assets/images/applications.png");
+    }
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
