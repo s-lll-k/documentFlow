@@ -173,7 +173,7 @@ export default {
       <div class="profile__items" v-if="referenceInfo">
         <div class="profile__item" v-for="(item, index) in profileInfo" :key="index">
           <p>
-            {{ item.title }}:<span>{{ referenceInfo[item.backendKey] }}</span>
+            {{ translations[item.title] }}:<span>{{ referenceInfo[item.backendKey] }}</span>
           </p>
         </div>
       </div>
