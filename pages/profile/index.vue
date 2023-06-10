@@ -39,11 +39,12 @@ export default {
         { title: "yearOfGraduationLabel", backendKey: "yearGrad" },
       ],
       managerProfileInfo: [
-        { title: "fullName", backendKey: "headFullName" },
+        { title: "fullName", backendKey: "user" },
         { title: "phoneNumberLabel", backendKey: "phoneNumber" },
         { title: "emailLabel", backendKey: "email" },
         { title: "groupLabel", backendKey: "group" },
-        { title: "positionLabel", backendKey: "position" }
+        { title: "positionLabel", backendKey: "position" },
+        { title: "headFullName", backendKey: "headFullName"},
       ]
     };
   },
